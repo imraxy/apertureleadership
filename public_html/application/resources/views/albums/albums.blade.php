@@ -161,6 +161,7 @@
         flex-direction: column;
         justify-content: flex-end;
         padding: 24px;
+        pointer-events: none;
     }
     
     .gallery-item:hover .overlay {
@@ -210,6 +211,7 @@
         cursor: pointer;
         border: none;
         z-index: 10;
+        pointer-events: auto;
     }
     
     .gallery-item:hover .add-to-folder {
@@ -219,13 +221,14 @@
     
     .add-to-folder:hover {
         background: #d4a65a;
-        transform: scale(1.1);
+        transform: scale(1.1) !important;
     }
     
     .add-to-folder img {
         width: 20px;
         height: 20px;
         filter: brightness(0);
+        pointer-events: none;
     }
     
     /* Login Section */
@@ -373,13 +376,14 @@
                 }
                 
                 // Get category name
-                $categoryName = $album->album_category->name ?? 'Uncategorized';
+                $categoryName = $album->album_category ? $album->album_category->name : 'Uncategorized';
             @endphp
             
             <figure itemprop="associatedMedia" class="gallery-item {{ $aspectClass }} ext{{$album->id}}" itemscope itemtype="http://schema.org/ImageObject">
                 <a href="{{asset('application/public/uploads/albums')}}/{{$album->id}}/{{$album->session_image}}" 
                    itemprop="contentUrl" 
-                   data-size="{{$album->width}}x{{$album->height}}">
+                   data-size="{{$album->width}}x{{$album->height}}"
+                   class="photoswipe-trigger">
                     <img src="{{asset('application/public/uploads/albums')}}/{{$album->id}}/{{$album->small_image && file_exists(public_path('uploads/albums/'.$album->id.'/'.$album->small_image)) ? $album->small_image : $album->session_image}}" 
                          itemprop="thumbnail" 
                          alt="{{$album->title}}" 
@@ -413,6 +417,53 @@
     </section>
     @endguest
     
+    <!--***** PHOTOSWIPE *****-->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+                
+                <!-- Add to Folder Button in PhotoSwipe -->
+                <div class="pswp__add-to-folder" style="position: absolute; bottom: 80px; right: 20px; z-index: 100;">
+                    <button class="pswp-folder-btn" style="background: #d4a65a; color: #0a0a0c; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <img src="{{asset('content/images/folder-plus1.png')}}" style="width: 18px; height: 18px; filter: brightness(0);">
+                        Add to Folder
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 @endsection
 
 @push('js')
@@ -435,21 +486,31 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
         for(var i = 0; i < numNodes; i++) {
             figureEl = thumbElements[i];
             if(figureEl.nodeType !== 1) continue;
-            linkEl = figureEl.children[0];
+            
+            linkEl = figureEl.querySelector('.photoswipe-trigger');
+            if(!linkEl) continue;
+            
             size = linkEl.getAttribute('data-size').split('x');
             
             item = {
                 src: linkEl.getAttribute('href'),
                 w: parseInt(size[0], 10),
-                h: parseInt(size[1], 10)
+                h: parseInt(size[1], 10),
+                albumId: figureEl.querySelector('.add-to-folder')?.getAttribute('data-val') || ''
             };
 
-            if(figureEl.children.length > 1) {
-                item.title = figureEl.querySelector('.image-title')?.textContent || '';
+            var titleEl = figureEl.querySelector('.image-title');
+            var categoryEl = figureEl.querySelector('.image-category');
+            if(titleEl) {
+                item.title = '<div style="text-align: center;">' + 
+                    '<h3 style="margin: 0 0 8px 0; font-size: 18px;">' + titleEl.textContent + '</h3>' +
+                    (categoryEl ? '<span style="color: #d4a65a; font-size: 12px; text-transform: uppercase;">' + categoryEl.textContent + '</span>' : '') +
+                    '</div>';
             }
 
-            if(linkEl.children.length > 0) {
-                item.msrc = linkEl.children[0].getAttribute('src');
+            var imgEl = linkEl.querySelector('img');
+            if(imgEl) {
+                item.msrc = imgEl.getAttribute('src');
             }
 
             item.el = figureEl;
@@ -463,6 +524,11 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
     };
 
     var onThumbnailsClick = function(e) {
+        // Don't open PhotoSwipe if clicking the Add to Folder button
+        if(e.target.closest('.add-to-folder')) {
+            return true;
+        }
+        
         e = e || window.event;
         e.preventDefault ? e.preventDefault() : e.returnValue = false;
 
@@ -494,7 +560,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
         return false;
     };
 
-    var openPhotoSwipe = function(index, galleryElement, disableAnimation) {
+    var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
         var pswpElement = document.querySelectorAll('.pswp')[0],
             gallery,
             options,
@@ -505,18 +571,60 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
         options = {
             galleryUID: galleryElement.getAttribute('data-pswp-uid'),
             getThumbBoundsFn: function(index) {
-                var thumbnail = items[index].el.getElementsByTagName('img')[0],
+                var thumbnail = items[index].el.querySelector('img'),
                     pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
                     rect = thumbnail.getBoundingClientRect();
                 return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+            },
+            addCaptionHTMLFn: function(item, captionEl) {
+                if(!item.title) {
+                    captionEl.children[0].innerHTML = '';
+                    return false;
+                }
+                captionEl.children[0].innerHTML = item.title;
+                return true;
             }
         };
 
-        if(disableAnimation) options.showAnimationDuration = 0;
-        options.index = parseInt(index, 10);
+        if(fromURL) {
+            if(options.galleryPIDs) {
+                for(var j = 0; j < items.length; j++) {
+                    if(items[j].pid == index) {
+                        options.index = j;
+                        break;
+                    }
+                }
+            } else {
+                options.index = parseInt(index, 10) - 1;
+            }
+        } else {
+            options.index = parseInt(index, 10);
+        }
+
         if(isNaN(options.index)) return;
 
+        if(disableAnimation) {
+            options.showAnimationDuration = 0;
+        }
+
         gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+        
+        // Update Add to Folder button in PhotoSwipe
+        gallery.listen('afterChange', function() {
+            var currItem = gallery.currItem;
+            var folderBtn = document.querySelector('.pswp-folder-btn');
+            if(folderBtn && currItem) {
+                folderBtn.setAttribute('data-val', currItem.albumId);
+                folderBtn.onclick = function() {
+                    // Trigger the add to cart functionality
+                    var albumId = this.getAttribute('data-val');
+                    if(albumId && typeof addtocart === 'function') {
+                        addtocart(albumId);
+                    }
+                };
+            }
+        });
+        
         gallery.init();
     };
 
@@ -525,8 +633,37 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
         galleryElements[i].setAttribute('data-pswp-uid', i+1);
         galleryElements[i].onclick = onThumbnailsClick;
     }
+
+    var hashData = photoswipeParseHash();
+    if(hashData.pid && hashData.gid) {
+        openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+    }
 };
 
+var photoswipeParseHash = function() {
+    var hash = window.location.hash.substring(1),
+    params = {};
+
+    if(hash.length < 5) {
+        return params;
+    }
+
+    var vars = hash.split('&');
+    for(var i = 0; i < vars.length; i++) {
+        if(!vars[i]) continue;
+        var pair = vars[i].split('=');
+        if(pair.length < 2) continue;
+        params[pair[0]] = pair[1];
+    }
+
+    if(params.gid) {
+        params.gid = parseInt(params.gid, 10);
+    }
+
+    return params;
+};
+
+// Initialize PhotoSwipe
 initPhotoSwipeFromDOM('.gallery-grid');
 </script>
 @endpush
