@@ -1,225 +1,426 @@
 @extends('layouts.master')
+
 @push('css')
 <style>
-.album-box {
-    margin-top: 27px!important;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-/* Cursor Reactive Effects */
-.album-box:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    z-index: 10;
-}
-
-.album-box img {
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.album-box:hover img {
-    transform: scale(1.05);
-}
-
-/* Category Filter Buttons - Cursor Reactive */
-.tabs-style-bar nav ul li a {
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.tabs-style-bar nav ul li a::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(212, 166, 90, 0.2);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.4s ease, height 0.4s ease;
-}
-
-.tabs-style-bar nav ul li a:hover::before {
-    width: 200%;
-    height: 200%;
-}
-
-.tabs-style-bar nav ul li a:hover {
-    transform: translateY(-2px);
-    color: #d4a65a;
-}
-
-/* Magnetic effect for Add to Folder button */
-.plus-icon {
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
-}
-
-.plus-icon:hover {
-    transform: scale(1.05);
-    color: #d4a65a !important;
-}
-
-/* Gallery container perspective for 3D effects */
-.album-gallery {
-    perspective: 1000px;
-}
-
-/* Spotlight effect on gallery items */
-.album-box::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 166, 90, 0.15) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    border-radius: 4px;
-}
-
-.album-box:hover::after {
-    opacity: 1;
-}
+    /* Albums Hero Section */
+    .albums-hero {
+        background: linear-gradient(135deg, #0a0a0c 0%, #1a1a1e 100%);
+        padding: 80px 0 60px;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+    
+    .albums-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(212, 166, 90, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+    }
+    
+    .albums-hero .page-title {
+        color: #ffffff;
+        font-size: 48px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .albums-hero .page-subtitle {
+        color: #a0a0a8;
+        font-size: 18px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Category Filter Bar */
+    .category-filter {
+        background: #151519;
+        padding: 24px 0;
+        border-bottom: 1px solid #2a2a30;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .category-filter nav ul {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        flex-wrap: wrap;
+    }
+    
+    .category-filter nav ul li a {
+        display: block;
+        padding: 12px 24px;
+        color: #a0a0a8;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+    
+    .category-filter nav ul li a:hover {
+        color: #d4a65a;
+        background: rgba(212, 166, 90, 0.1);
+        border-color: rgba(212, 166, 90, 0.3);
+    }
+    
+    .category-filter nav ul li.tab-current a,
+    .category-filter nav ul li#tab-current a {
+        color: #0a0a0c;
+        background: #d4a65a;
+        border-color: #d4a65a;
+    }
+    
+    .category-filter nav ul li.tab-current a:hover,
+    .category-filter nav ul li#tab-current a:hover {
+        background: #e4b66a;
+    }
+    
+    /* Gallery Section */
+    .gallery-section {
+        background: #0f0f12;
+        padding: 60px 0 100px;
+        min-height: 60vh;
+    }
+    
+    /* Masonry Grid Layout */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-auto-rows: 10px;
+        gap: 24px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+    }
+    
+    /* Gallery Item */
+    .gallery-item {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #1a1a1e;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .gallery-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .gallery-item:hover img {
+        transform: scale(1.05);
+    }
+    
+    /* Dynamic heights for masonry effect */
+    .gallery-item.portrait {
+        grid-row: span 35;
+    }
+    
+    .gallery-item.landscape {
+        grid-row: span 25;
+    }
+    
+    .gallery-item.square {
+        grid-row: span 30;
+    }
+    
+    /* Image Overlay */
+    .gallery-item .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 24px;
+    }
+    
+    .gallery-item:hover .overlay {
+        opacity: 1;
+    }
+    
+    /* Image Info */
+    .image-info {
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+    
+    .gallery-item:hover .image-info {
+        transform: translateY(0);
+    }
+    
+    .image-title {
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+    
+    .image-category {
+        color: #d4a65a;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    /* Add to Folder Button */
+    .add-to-folder {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+        background: rgba(212, 166, 90, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+        z-index: 10;
+    }
+    
+    .gallery-item:hover .add-to-folder {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    .add-to-folder:hover {
+        background: #d4a65a;
+        transform: scale(1.1);
+    }
+    
+    .add-to-folder img {
+        width: 20px;
+        height: 20px;
+        filter: brightness(0);
+    }
+    
+    /* Login Section */
+    .login-section {
+        background: #0a0a0c;
+        padding: 60px 0;
+        text-align: center;
+    }
+    
+    .login-section p {
+        color: #a0a0a8;
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+    
+    .login-btn {
+        display: inline-block;
+        background: #d4a65a;
+        color: #0a0a0c;
+        padding: 16px 48px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .login-btn:hover {
+        background: #e4b66a;
+        transform: translateY(-2px);
+        color: #0a0a0c;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            padding: 0 20px;
+        }
+        
+        .gallery-item.portrait {
+            grid-row: span 30;
+        }
+        
+        .gallery-item.landscape {
+            grid-row: span 20;
+        }
+        
+        .gallery-item.square {
+            grid-row: span 25;
+        }
+        
+        .category-filter nav ul {
+            gap: 8px;
+        }
+        
+        .category-filter nav ul li a {
+            padding: 10px 16px;
+            font-size: 12px;
+        }
+    }
+    
+    /* Loading Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .gallery-item {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    .gallery-item:nth-child(1) { animation-delay: 0.05s; }
+    .gallery-item:nth-child(2) { animation-delay: 0.1s; }
+    .gallery-item:nth-child(3) { animation-delay: 0.15s; }
+    .gallery-item:nth-child(4) { animation-delay: 0.2s; }
+    .gallery-item:nth-child(5) { animation-delay: 0.25s; }
+    .gallery-item:nth-child(6) { animation-delay: 0.3s; }
+    .gallery-item:nth-child(7) { animation-delay: 0.35s; }
+    .gallery-item:nth-child(8) { animation-delay: 0.4s; }
+    .gallery-item:nth-child(9) { animation-delay: 0.45s; }
+    .gallery-item:nth-child(10) { animation-delay: 0.5s; }
+    .gallery-item:nth-child(11) { animation-delay: 0.55s; }
+    .gallery-item:nth-child(12) { animation-delay: 0.6s; }
 </style>
 
 <link rel="stylesheet" href="{{asset('content/css/photoswipe.css')}}"> 
 <link rel="stylesheet" href="{{asset('content/css/default-skin/default-skin.css')}}">
-	
 @endpush
+
 @section('content')
+    <!-- Hero Section -->
+    <section class="albums-hero">
+        <div class="container">
+            <h1 class="page-title">Photo Gallery</h1>
+            <p class="page-subtitle">Explore our collection of leadership metaphors from around the world</p>
+        </div>
+    </section>
     
-	<section class="ex-latestsession">
-		<div class="container pt-80 pb-65">
-			
-			<div class="tabs tabs-style-bar">
-				<nav>
-					<ul>
-						@if(request('slug'))
-						<li id="tab-current">
-						@else
-						<li class="tab-current">	
-						@endif
-							<a href="{{route('front.albums')}}" class="icon icon-home"><span>All</span></a>
-						</li>
-						@php $i = 0; @endphp
-						@foreach($albumcategories as $albumcategory)
-						@php 
-							$i++; 
-							$tab_current_cls = '';
-							if(request('slug')==$albumcategory->slug) {
-								$tab_current_cls = 'tab-current';
-							}	
-						@endphp
-						<li class="{{$tab_current_cls}}">
-							<a href="{{route('front.albums', $albumcategory->slug)}}" class="icon icon-box"><span>{{$albumcategory->name}}</span></a>
-						</li>
-					@endforeach
-					</ul>
-				</nav>
-				<div class="content-wrap">
-					<section id="section-bar-all" class="content-current">
-						<div class="row album-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-						    @foreach($albums as $album)
-						    
-					    <?php 
-					    $maxWidth = 334.64; // Max width for the image
-						$maxHeight = 250;    // Max height for the image
-					 
-						$width = $album->width;    // Current image width
-						$height = $album->height;  // Current image height
-						 
-						$ratio = min($maxWidth / $width, $maxHeight / $height);
-						$w = $width * $ratio ;
-						$h = $height * $ratio;
-					    
-					    ?>
-						    
-					         <figure itemprop="associatedMedia" class="album-box ext{{$album->id}}" itemscope itemtype="http://schema.org/ImageObject">
-                                <a href="{{asset('application/public/uploads/albums')}}/{{$album->id}}/{{$album->session_image}}" itemprop="contentUrl" data-size="{{$album->width}}x{{$album->height}}">
-                                    <img src="{{asset('application/public/uploads/albums')}}/{{$album->id}}/{{$album->small_image && file_exists(public_path('uploads/albums/'.$album->id.'/'.$album->small_image)) ? $album->small_image : $album->session_image}}" itemprop="thumbnail" alt="Image description"  loading="lazy" style="width:{{$w}}px; height:{{$h}}px;" />
-                                </a>
-                               <figcaption itemprop="caption description" class="_figcaptiondescription"  <p class="img-title">{{$album->title}}</p> <div class="_description"></div> <p class="plus-icon toCart addtocartbtn" style="color:#fff;" data-val="{{$album->id}}"><img src="{{asset("content/images/folder-plus1.png")}}"> Add to Folder</p> </figcaption>
-                            </figure>
-                             @endforeach
-						</div>
-					</section>
-				</div><!-- /content -->
-			</div><!-- /tabs -->
-			
-			@guest
-				<div class="col-sm-12">
-					<div class="ex-letswork pt-50 pb-50 text-center">
-						<a class="ex-btncontact" href="{{route('login')}}">Login</a>
-					</div>
-				</div>
-			@endif
-		</div>
-	</section>
-	
-	<!--***** PHOTOSWIPE *****-->
-	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="pswp__bg"></div>
-		<div class="pswp__scroll-wrap">
-			<div class="pswp__container">
-				<div class="pswp__item"></div>
-				<div class="pswp__item"></div>
-				<div class="pswp__item"></div>
-			</div>
-
-			<div class="pswp__ui pswp__ui--hidden">
-				<div class="pswp__top-bar">
-					<div class="pswp__counter"></div>
-
-					<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-					<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-					<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-					<div class="pswp__preloader">
-						<div class="pswp__preloader__icn">
-							<div class="pswp__preloader__cut">
-								<div class="pswp__preloader__donut">
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-				<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-					<div class="pswp__share-tooltip">
-					</div>
-				</div>
-
-				<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-				<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
-
-				<div class="pswp__caption">
-					<div class="pswp__caption__center"> </div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-	<input type="hidden" class="userid" value="1" />
-
+    <!-- Category Filter -->
+    <section class="category-filter">
+        <nav>
+            <ul>
+                @if(request('slug'))
+                <li><a href="{{route('front.albums')}}">All</a></li>
+                @else
+                <li class="tab-current"><a href="{{route('front.albums')}}">All</a></li>
+                @endif
+                
+                @foreach($albumcategories as $albumcategory)
+                @php
+                    $isActive = request('slug') == $albumcategory->slug;
+                @endphp
+                <li class="{{ $isActive ? 'tab-current' : '' }}">
+                    <a href="{{route('front.albums', $albumcategory->slug)}}">{{$albumcategory->name}}</a>
+                </li>
+                @endforeach
+            </ul>
+        </nav>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="gallery-grid" itemscope itemtype="http://schema.org/ImageGallery">
+            @foreach($albums as $album)
+            @php
+                // Determine aspect ratio class
+                $width = $album->width ?? 800;
+                $height = $album->height ?? 600;
+                $ratio = $width / $height;
+                
+                if ($ratio < 0.8) {
+                    $aspectClass = 'portrait';
+                } elseif ($ratio > 1.3) {
+                    $aspectClass = 'landscape';
+                } else {
+                    $aspectClass = 'square';
+                }
+                
+                // Get category name
+                $categoryName = $album->album_category->name ?? 'Uncategorized';
+            @endphp
+            
+            <figure itemprop="associatedMedia" class="gallery-item {{ $aspectClass }} ext{{$album->id}}" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="{{asset('application/public/uploads/albums')}}/{{$album->id}}/{{$album->session_image}}" 
+                   itemprop="contentUrl" 
+                   data-size="{{$album->width}}x{{$album->height}}">
+                    <img src="{{asset('application/public/uploads/albums')}}/{{$album->id}}/{{$album->small_image && file_exists(public_path('uploads/albums/'.$album->id.'/'.$album->small_image)) ? $album->small_image : $album->session_image}}" 
+                         itemprop="thumbnail" 
+                         alt="{{$album->title}}" 
+                         loading="lazy" />
+                </a>
+                
+                <div class="overlay">
+                    <div class="image-info">
+                        <h3 class="image-title">{{$album->title}}</h3>
+                        <span class="image-category">{{ $categoryName }}</span>
+                    </div>
+                </div>
+                
+                @guest
+                <button class="add-to-folder toCart addtocartbtn" data-val="{{$album->id}}" title="Add to Folder">
+                    <img src="{{asset('content/images/folder-plus1.png')}}" alt="Add to folder">
+                </button>
+                @endguest
+            </figure>
+            @endforeach
+        </div>
+    </section>
+    
+    @guest
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="container">
+            <p>Sign in to save images to your personal folder</p>
+            <a href="{{route('login')}}" class="login-btn">Login to Continue</a>
+        </div>
+    </section>
+    @endguest
+    
 @endsection
 
 @push('js')
+<script src="{{asset('content/js/photoswipe.min.js')}}"></script>
+<script src="{{asset('content/js/photoswipe-ui-default.min.js')}}"></script>
+<script src="{{asset('content/js/cart.js')}}"></script>
 
-<script src="{{asset('content/js/photoswipe.min.js')}}"></script> 
-<!-- UI JS file -->
-<script src="{{asset('content/js/photoswipe-ui-default.min.js')}}"></script>	
-	<script>
+<script>
+// PhotoSwipe initialization
 var initPhotoSwipeFromDOM = function(gallerySelector) {
-
-    // parse slide data (url, title, size ...) from DOM elements 
-    // (children of gallerySelector)
     var parseThumbnailElements = function(el) {
         var thumbElements = el.childNodes,
             numNodes = thumbElements.length,
@@ -230,67 +431,46 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             item;
 
         for(var i = 0; i < numNodes; i++) {
-
-            figureEl = thumbElements[i]; // <figure> element
-
-            // include only element nodes 
-            if(figureEl.nodeType !== 1) {
-                continue;
-            }
-
-            linkEl = figureEl.children[0]; // <a> element
-
+            figureEl = thumbElements[i];
+            if(figureEl.nodeType !== 1) continue;
+            linkEl = figureEl.children[0];
             size = linkEl.getAttribute('data-size').split('x');
-
-            // create slide object
+            
             item = {
                 src: linkEl.getAttribute('href'),
                 w: parseInt(size[0], 10),
                 h: parseInt(size[1], 10)
             };
 
-
-
             if(figureEl.children.length > 1) {
-                // <figcaption> content
-                item.title = figureEl.children[1].innerHTML; 
+                item.title = figureEl.querySelector('.image-title')?.textContent || '';
             }
 
             if(linkEl.children.length > 0) {
-                // <img> thumbnail element, retrieving thumbnail url
                 item.msrc = linkEl.children[0].getAttribute('src');
-            } 
+            }
 
-            item.el = figureEl; // save link to element for getThumbBoundsFn
+            item.el = figureEl;
             items.push(item);
         }
-
         return items;
     };
 
-    // find nearest parent element
     var closest = function closest(el, fn) {
-        return el && ( fn(el) ? el : closest(el.parentNode, fn) );
+        return el && (fn(el) ? el : closest(el.parentNode, fn));
     };
 
-    // triggers when user clicks on thumbnail
     var onThumbnailsClick = function(e) {
         e = e || window.event;
         e.preventDefault ? e.preventDefault() : e.returnValue = false;
 
         var eTarget = e.target || e.srcElement;
-
-        // find root element of slide
         var clickedListItem = closest(eTarget, function(el) {
-            return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+            return el.tagName && el.tagName.toUpperCase() === 'FIGURE';
         });
 
-        if(!clickedListItem) {
-            return;
-        }
+        if(!clickedListItem) return;
 
-        // find index of clicked item by looping through all child nodes
-        // alternatively, you may define index via data- attribute
         var clickedGallery = clickedListItem.parentNode,
             childNodes = clickedListItem.parentNode.childNodes,
             numChildNodes = childNodes.length,
@@ -298,10 +478,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             index;
 
         for (var i = 0; i < numChildNodes; i++) {
-            if(childNodes[i].nodeType !== 1) { 
-                continue; 
-            }
-
+            if(childNodes[i].nodeType !== 1) continue;
             if(childNodes[i] === clickedListItem) {
                 index = nodeIndex;
                 break;
@@ -309,44 +486,13 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             nodeIndex++;
         }
 
-
-
         if(index >= 0) {
-            // open PhotoSwipe if valid index found
-            openPhotoSwipe( index, clickedGallery );
+            openPhotoSwipe(index, clickedGallery);
         }
         return false;
     };
 
-    // parse picture index and gallery index from URL (#&pid=1&gid=2)
-    var photoswipeParseHash = function() {
-        var hash = window.location.hash.substring(1),
-        params = {};
-
-        if(hash.length < 5) {
-            return params;
-        }
-
-        var vars = hash.split('&');
-        for (var i = 0; i < vars.length; i++) {
-            if(!vars[i]) {
-                continue;
-            }
-            var pair = vars[i].split('=');  
-            if(pair.length < 2) {
-                continue;
-            }           
-            params[pair[0]] = pair[1];
-        }
-
-        if(params.gid) {
-            params.gid = parseInt(params.gid, 10);
-        }
-
-        return params;
-    };
-
-    var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+    var openPhotoSwipe = function(index, galleryElement, disableAnimation) {
         var pswpElement = document.querySelectorAll('.pswp')[0],
             gallery,
             options,
@@ -354,120 +500,31 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
         items = parseThumbnailElements(galleryElement);
 
-        // define options (if needed)
         options = {
-
-            // define gallery index (for URL)
             galleryUID: galleryElement.getAttribute('data-pswp-uid'),
-
             getThumbBoundsFn: function(index) {
-                // See Options -> getThumbBoundsFn section of documentation for more info
-                var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                var thumbnail = items[index].el.getElementsByTagName('img')[0],
                     pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
-                    rect = thumbnail.getBoundingClientRect(); 
-
+                    rect = thumbnail.getBoundingClientRect();
                 return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
             }
-
         };
 
-        // PhotoSwipe opened from URL
-        if(fromURL) {
-            if(options.galleryPIDs) {
-                // parse real index when custom PIDs are used 
-                // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
-                for(var j = 0; j < items.length; j++) {
-                    if(items[j].pid == index) {
-                        options.index = j;
-                        break;
-                    }
-                }
-            } else {
-                // in URL indexes start from 1
-                options.index = parseInt(index, 10) - 1;
-            }
-        } else {
-            options.index = parseInt(index, 10);
-        }
+        if(disableAnimation) options.showAnimationDuration = 0;
+        options.index = parseInt(index, 10);
+        if(isNaN(options.index)) return;
 
-        // exit if index not found
-        if( isNaN(options.index) ) {
-            return;
-        }
-
-        if(disableAnimation) {
-            options.showAnimationDuration = 0;
-        }
-
-        // Pass data to PhotoSwipe and initialize it
-        gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+        gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
         gallery.init();
     };
 
-    // loop through all gallery elements and bind events
-    var galleryElements = document.querySelectorAll( gallerySelector );
-
+    var galleryElements = document.querySelectorAll(gallerySelector);
     for(var i = 0, l = galleryElements.length; i < l; i++) {
         galleryElements[i].setAttribute('data-pswp-uid', i+1);
         galleryElements[i].onclick = onThumbnailsClick;
     }
-
-    // Parse URL and open gallery if it contains #&pid=3&gid=1
-    var hashData = photoswipeParseHash();
-    if(hashData.pid && hashData.gid) {
-        openPhotoSwipe( hashData.pid ,  galleryElements[ hashData.gid - 1 ], true, true );
-    }
 };
 
-// execute above function
-
-initPhotoSwipeFromDOM('.album-gallery');
-
-// Cursor Reactive Spotlight Effect
-const albumBoxes = document.querySelectorAll('.album-box');
-
-albumBoxes.forEach(box => {
-    box.addEventListener('mousemove', (e) => {
-        const rect = box.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        
-        box.style.setProperty('--mouse-x', `${x}%`);
-        box.style.setProperty('--mouse-y', `${y}%`);
-    });
-});
-
-// 3D Tilt Effect on Gallery Items
-const gallery = document.querySelector('.album-gallery');
-if (gallery) {
-    gallery.addEventListener('mousemove', (e) => {
-        const cards = gallery.querySelectorAll('.album-box');
-        cards.forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
-            
-            if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
-            }
-        });
-    });
-    
-    gallery.addEventListener('mouseleave', () => {
-        const cards = gallery.querySelectorAll('.album-box');
-        cards.forEach(card => {
-            card.style.transform = '';
-        });
-    });
-}
+initPhotoSwipeFromDOM('.gallery-grid');
 </script>
-
- 
-<script type="text/javascript" src="{{asset('content/js/cart.js')}}"></script>
 @endpush
