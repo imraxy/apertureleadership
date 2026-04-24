@@ -44,7 +44,7 @@ class AlbumsController extends Controller
 
         }
 
-        $albums = $albums->with('album_category')->orderBy('created_at','DESC')->get();
+        $albums = $albums->with('albumCategory')->orderBy('created_at','DESC')->get();
          
         $albumcategories = AlbumCategory::get();
        

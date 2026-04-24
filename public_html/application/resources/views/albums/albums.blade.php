@@ -376,7 +376,7 @@
                 }
                 
                 // Get category name
-                $categoryName = $album->album_category ? $album->album_category->name : 'Uncategorized';
+                $categoryName = $album->albumCategory ? $album->albumCategory->name : 'Uncategorized';
             @endphp
             
             <figure itemprop="associatedMedia" class="gallery-item {{ $aspectClass }} ext{{$album->id}}" itemscope itemtype="http://schema.org/ImageObject">
