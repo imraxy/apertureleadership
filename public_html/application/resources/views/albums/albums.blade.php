@@ -36,6 +36,8 @@
         font-size: 18px;
         position: relative;
         z-index: 1;
+        max-width: 600px;
+        margin: 0 auto;
     }
     
     /* Category Filter Bar */
