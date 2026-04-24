@@ -2,156 +2,150 @@
 
 @push('css')
 <style>
-    .testinn_img{
-        border-radius: 100%;
-    }
-    
-    /* Cinematic Hero Section - Scoped to avoid conflicts */
-    .cinematic-hero-section {
-        position: relative;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #0a0a0c 0%, #1a1a1e 50%, #0a0a0c 100%);
+    /* Unified Hero Section */
+    .unified-hero {
+        background: linear-gradient(135deg, #0a0a0c 0%, #15151a 50%, #0a0a0c 100%);
+        min-height: 90vh;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
-    }
-    
-    .cinematic-hero-content {
         position: relative;
-        z-index: 10;
-        text-align: center;
-        padding: 80px 40px;
-        max-width: 900px;
+        overflow: hidden;
+        padding: 40px 20px;
     }
     
-    .cinematic-hero-content .hero-tagline {
-        font-size: clamp(24px, 4vw, 42px);
-        font-weight: 500;
+    .unified-hero::before {
+        content: '';
+        position: absolute;
+        top: 5%;
+        left: 10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(212, 166, 90, 0.12) 0%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(60px);
+    }
+    
+    .unified-hero::after {
+        content: '';
+        position: absolute;
+        bottom: 5%;
+        right: 10%;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(74, 144, 217, 0.08) 0%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(60px);
+    }
+    
+    .hero-content {
+        text-align: center;
+        max-width: 900px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .hero-title {
+        font-size: clamp(32px, 6vw, 56px);
+        font-weight: 600;
         color: #ffffff;
         margin-bottom: 16px;
-        line-height: 1.3;
-        letter-spacing: -0.01em;
+        line-height: 1.2;
     }
     
-    .cinematic-hero-content .hero-subtitle {
-        font-size: 16px;
+    .hero-title span {
+        color: #d4a65a;
+    }
+    
+    .hero-subtitle {
+        font-size: clamp(18px, 3vw, 24px);
+        font-weight: 400;
         color: #a0a0a8;
-        line-height: 1.6;
-        margin-bottom: 40px;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
+        margin-bottom: 20px;
     }
     
-    .cinematic-cta {
+    .hero-tagline {
+        font-size: clamp(16px, 2vw, 20px);
+        color: #808088;
+        margin-bottom: 40px;
+        line-height: 1.5;
+    }
+    
+    .hero-cta {
         display: inline-block;
-        padding: 16px 40px;
         background: #d4a65a;
-        color: #0a0a0c;
+        color: #0a0a0c !important;
+        padding: 18px 48px;
+        border-radius: 8px;
         font-size: 16px;
         font-weight: 600;
-        border-radius: 8px;
         text-decoration: none;
         transition: all 0.3s ease;
         box-shadow: 0 4px 20px rgba(212, 166, 90, 0.3);
     }
     
-    .cinematic-cta:hover {
+    .hero-cta:hover {
         background: #e4b66a;
         transform: translateY(-2px);
         box-shadow: 0 6px 30px rgba(212, 166, 90, 0.4);
-    }
-    
-    /* Decorative elements */
-    .hero-glow {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(80px);
-        opacity: 0.4;
-    }
-    
-    .hero-glow-1 {
-        width: 400px;
-        height: 400px;
-        background: #d4a65a;
-        top: -100px;
-        left: -100px;
-    }
-    
-    .hero-glow-2 {
-        width: 300px;
-        height: 300px;
-        background: #4a90d9;
-        bottom: -50px;
-        right: -50px;
+        color: #0a0a0c !important;
     }
     
     /* About Section */
-    .cinematic-about {
-        background: #0f0f12;
+    .about-section {
+        background: #121216;
         padding: 100px 0;
     }
     
-    .cinematic-about .container {
-        max-width: 1000px;
+    .about-section .container {
+        max-width: 900px;
     }
     
-    .cinematic-about p {
-        font-size: 20px;
+    .about-section p {
+        font-size: 18px;
         line-height: 1.8;
-        color: #c0c0c8;
+        color: #b0b0b8;
         text-align: center;
         margin-bottom: 30px;
     }
     
     /* Testimonials Section */
-    .cinematic-testimonials {
+    .testimonials-section {
         background: #0a0a0c;
         padding: 80px 0;
-        overflow: hidden;
     }
     
-    .cinematic-testimonials h2 {
+    .testimonials-section h2 {
         text-align: center;
         color: #ffffff;
         font-size: 36px;
         margin-bottom: 50px;
-        font-weight: 600;
     }
     
-    .testimonial-marquee {
-        position: relative;
-    }
-    
-    .marquee-track {
+    .testimonials-grid {
         display: flex;
-        animation: marquee 40s linear infinite;
-    }
-    
-    .marquee-track:hover {
-        animation-play-state: paused;
-    }
-    
-    @keyframes marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+        gap: 30px;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
     }
     
     .testimonial-card {
-        flex-shrink: 0;
-        width: 400px;
-        margin: 0 20px;
-        background: #151519;
-        border: 1px solid #25252a;
+        background: #1a1a1e;
+        border: 1px solid #2a2a30;
         border-radius: 16px;
         padding: 32px;
-        transition: transform 0.3s ease;
+        width: 100%;
+        max-width: 500px;
+        transition: all 0.3s ease;
     }
     
     .testimonial-card:hover {
-        transform: translateY(-5px);
         border-color: #d4a65a;
+        transform: translateY(-5px);
     }
     
     .testimonial-header {
@@ -163,9 +157,9 @@
     .testimonial-header img {
         width: 60px;
         height: 60px;
+        border-radius: 50%;
         object-fit: cover;
         margin-right: 16px;
-        border-radius: 50%;
         border: 2px solid #d4a65a;
     }
     
@@ -176,15 +170,14 @@
         font-weight: 600;
     }
     
-    .testimonial-header p {
+    .testimonial-header span {
         color: #6a6a70;
-        margin: 4px 0 0 0;
-        font-size: 13px;
+        font-size: 14px;
     }
     
-    .testimonial-card > p {
+    .testimonial-card p {
         color: #a0a0a8;
-        font-size: 15px;
+        font-size: 16px;
         line-height: 1.6;
         font-style: italic;
         margin: 0;
@@ -193,19 +186,17 @@
 @endpush
 
 @section('content')
-    {{-- Cinematic Hero Section - Compact, elegant, no duplicate title --}}
-    <section class="cinematic-hero-section">
-        <div class="hero-glow hero-glow-1"></div>
-        <div class="hero-glow hero-glow-2"></div>
-        
-        <div class="cinematic-hero-content">
-            <p class="hero-tagline">Visual metaphors for leadership, strategy, and organizational development</p>
-            <p class="hero-subtitle">Photography from educational and humanitarian projects worldwide</p>
-            <a href="{{ route('front.albums') }}" class="cinematic-cta">Explore the Gallery</a>
+    {{-- Unified Hero Section with Title --}}
+    <section class="unified-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Aperture: <span>Through the Lens Leadership</span></h1>
+            <p class="hero-subtitle">Visual metaphors for leadership and strategy</p>
+            <p class="hero-tagline">Photography from educational and humanitarian projects worldwide</p>
+            <a href="{{ route('front.albums') }}" class="hero-cta">Explore the Gallery</a>
         </div>
     </section>
     
-    {{-- Original slider section (preserved but hidden) --}}
+    {{-- Hidden original slider --}}
     @if(count($sliders))
     <div style="display: none;">
         <div class="swiper-container swip-slider">
@@ -221,7 +212,7 @@
     @endif
     
     {{-- About Section --}}
-    <section class="cinematic-about">
+    <section class="about-section">
         <div class="container">
             <p>Henrik Ibsen first said "A thousand words leave not the same deep impression as does a single deed" which over time evolved into "A picture is worth a thousand words". This has been our inspiration behind Aperture, a system of metaphors developed to explore any question in the realm of leadership, strategy, change, innovation, creativity, or personal and organizational development.</p>
             <p>As a visual aid to dialogue, each image or set of images prompts us to explore and examine the questions and challenges we are facing in business and in life. Used in settings from consulting to coaching, mentoring, training and education, we took all of our photographs during travel assignments around the world for educational, social and humanitarian projects.</p>
@@ -229,40 +220,25 @@
     </section>
     
     @if(count($testimonials))
-    {{-- Testimonials Section with Kinetic Marquee --}}
-    <section class="cinematic-testimonials">
+    {{-- Testimonials Section --}}
+    <section class="testimonials-section">
         <div class="container">
             <h2>What People Say</h2>
         </div>
         
-        <div class="testimonial-marquee">
-            <div class="marquee-track">
-                @foreach($testimonials as $testimonial)
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <img src="{{asset('application/public/uploads/testimonials/'.$testimonial->image)}}" alt="{{$testimonial->name}}" />
-                        <div>
-                            <h5>{{$testimonial->name}}</h5>
-                            <p>{{$testimonial->designation ?? 'Client'}}</p>
-                        </div>
+        <div class="testimonials-grid">
+            @foreach($testimonials as $testimonial)
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <img src="{{asset('application/public/uploads/testimonials/'.$testimonial->image)}}" alt="{{$testimonial->name}}" />
+                    <div>
+                        <h5>{{$testimonial->name}}</h5>
+                        <span>{{$testimonial->designation ?? 'Client'}}</span>
                     </div>
-                    <p>"{{$testimonial->message}}"</p>
                 </div>
-                @endforeach
-                {{-- Duplicate for seamless loop --}}
-                @foreach($testimonials as $testimonial)
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <img src="{{asset('application/public/uploads/testimonials/'.$testimonial->image)}}" alt="{{$testimonial->name}}" />
-                        <div>
-                            <h5>{{$testimonial->name}}</h5>
-                            <p>{{$testimonial->designation ?? 'Client'}}</p>
-                        </div>
-                    </div>
-                    <p>"{{$testimonial->message}}"</p>
-                </div>
-                @endforeach
+                <p>"{{$testimonial->message}}"</p>
             </div>
+            @endforeach
         </div>
     </section>
     @endif
