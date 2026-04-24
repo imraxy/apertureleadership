@@ -21,31 +21,25 @@
         position: relative;
         z-index: 10;
         text-align: center;
-        padding: 60px 40px;
+        padding: 80px 40px;
         max-width: 900px;
     }
     
-    .cinematic-hero-content h1 {
-        font-size: clamp(36px, 6vw, 64px);
-        font-weight: 600;
+    .cinematic-hero-content .hero-tagline {
+        font-size: clamp(24px, 4vw, 42px);
+        font-weight: 500;
         color: #ffffff;
-        margin-bottom: 24px;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
+        margin-bottom: 16px;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
     }
     
-    .cinematic-hero-content h1 span {
-        color: #d4a65a;
-        display: block;
-        margin-top: 8px;
-    }
-    
-    .cinematic-hero-content p {
-        font-size: 18px;
+    .cinematic-hero-content .hero-subtitle {
+        font-size: 16px;
         color: #a0a0a8;
-        line-height: 1.7;
+        line-height: 1.6;
         margin-bottom: 40px;
-        max-width: 700px;
+        max-width: 600px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -199,14 +193,14 @@
 @endpush
 
 @section('content')
-    {{-- Cinematic Hero Section --}}
+    {{-- Cinematic Hero Section - Compact, elegant, no duplicate title --}}
     <section class="cinematic-hero-section">
         <div class="hero-glow hero-glow-1"></div>
         <div class="hero-glow hero-glow-2"></div>
         
         <div class="cinematic-hero-content">
-            <h1>Aperture: <span>Through the Lens Leadership</span></h1>
-            <p>Visual metaphors for leadership, strategy, and organizational development. Photography from educational and humanitarian projects worldwide.</p>
+            <p class="hero-tagline">Visual metaphors for leadership, strategy, and organizational development</p>
+            <p class="hero-subtitle">Photography from educational and humanitarian projects worldwide</p>
             <a href="{{ route('front.albums') }}" class="cinematic-cta">Explore the Gallery</a>
         </div>
     </section>
