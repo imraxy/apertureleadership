@@ -1,0 +1,328 @@
+/* Cinematic Dark Theme for Aperture Leadership */
+/* This file provides a complete dark theme override */
+
+:root {
+    --cinematic-bg: #0a0a0c;
+    --cinematic-bg-secondary: #121216;
+    --cinematic-bg-card: #1a1a1e;
+    --cinematic-text: #ffffff;
+    --cinematic-text-secondary: #a0a0a8;
+    --cinematic-text-muted: #6a6a70;
+    --cinematic-accent: #d4a65a;
+    --cinematic-accent-hover: #e4b66a;
+    --cinematic-border: #2a2a30;
+    --cinematic-glow: rgba(212, 166, 90, 0.3);
+}
+
+/* Force dark backgrounds */
+body,
+.ex-latestsession,
+.ex-aboutsection,
+.ex-testimonialsection,
+.ex-letswork,
+.ex-contactsection,
+.ex-guidelinessection,
+.ex-postsection {
+    background-color: var(--cinematic-bg) !important;
+    color: var(--cinematic-text) !important;
+}
+
+/* Container backgrounds */
+.container,
+.row,
+.col-sm-12,
+.col-md-6,
+.col-lg-4 {
+    background-color: transparent !important;
+}
+
+/* Navigation styling */
+header,
+.ex-header,
+.navbar,
+.nav-menu {
+    background-color: rgba(10, 10, 12, 0.95) !important;
+    border-bottom: 1px solid var(--cinematic-border) !important;
+}
+
+header h1,
+.ex-header h1 {
+    color: var(--cinematic-text) !important;
+}
+
+header p,
+.ex-header p {
+    color: var(--cinematic-text-secondary) !important;
+}
+
+/* Navigation links */
+.nav-menu a,
+.nav-menu span,
+.ex-header a {
+    color: var(--cinematic-text-secondary) !important;
+    transition: color 0.3s ease !important;
+}
+
+.nav-menu a:hover,
+.nav-menu .active a {
+    color: var(--cinematic-accent) !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.ex-latestsession h2,
+.ex-aboutsection h2,
+.ex-testimonialsection h2,
+.ex-contactsection h2 {
+    color: var(--cinematic-text) !important;
+}
+
+/* Paragraphs */
+p,
+.ex-aboutright p,
+.ex-testimonials p,
+.ex-contact-info p {
+    color: var(--cinematic-text-secondary) !important;
+}
+
+/* Links */
+a {
+    color: var(--cinematic-accent) !important;
+    transition: color 0.3s ease !important;
+}
+
+a:hover {
+    color: var(--cinematic-accent-hover) !important;
+}
+
+/* Buttons */
+.ex-btncontact,
+.btn-primary,
+.btn-submit,
+.addtocartbtn {
+    background-color: var(--cinematic-accent) !important;
+    color: var(--cinematic-bg) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 14px 32px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.ex-btncontact:hover,
+.btn-primary:hover,
+.addtocartbtn:hover {
+    background-color: var(--cinematic-accent-hover) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 20px var(--cinematic-glow) !important;
+}
+
+/* Gallery/Albums Page */
+.ex-latestsession {
+    background-color: var(--cinematic-bg) !important;
+}
+
+/* Category tabs */
+.tabs-style-bar nav ul {
+    background-color: var(--cinematic-bg-secondary) !important;
+    border-radius: 12px !important;
+    padding: 10px !important;
+}
+
+.tabs-style-bar nav ul li a {
+    color: var(--cinematic-text-secondary) !important;
+    background-color: transparent !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    transition: all 0.3s ease !important;
+}
+
+.tabs-style-bar nav ul li a:hover {
+    color: var(--cinematic-accent) !important;
+    background-color: rgba(212, 166, 90, 0.1) !important;
+}
+
+.tabs-style-bar nav ul li.tab-current a {
+    color: var(--cinematic-bg) !important;
+    background-color: var(--cinematic-accent) !important;
+}
+
+/* Album boxes/Photo cards */
+.album-box,
+figure[itemprop="associatedMedia"] {
+    background-color: var(--cinematic-bg-card) !important;
+    border: 1px solid var(--cinematic-border) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.album-box:hover,
+figure[itemprop="associatedMedia"]:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+    border-color: var(--cinematic-accent) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+.album-box img,
+figure[itemprop="associatedMedia"] img {
+    transition: transform 0.4s ease !important;
+}
+
+.album-box:hover img,
+figure[itemprop="associatedMedia"]:hover img {
+    transform: scale(1.05) !important;
+}
+
+/* Photo captions */
+.album-box figcaption,
+figure[itemprop="associatedMedia"] figcaption {
+    background-color: var(--cinematic-bg-card) !important;
+    color: var(--cinematic-text) !important;
+    border-top: 1px solid var(--cinematic-border) !important;
+}
+
+.img-title {
+    color: var(--cinematic-text) !important;
+}
+
+/* Add to folder button */
+.plus-icon,
+.addtocartbtn {
+    color: var(--cinematic-text-secondary) !important;
+    transition: all 0.3s ease !important;
+}
+
+.plus-icon:hover,
+.addtocartbtn:hover {
+    color: var(--cinematic-accent) !important;
+}
+
+/* Testimonials */
+.ex-testimonials .item {
+    background-color: var(--cinematic-bg-card) !important;
+    border: 1px solid var(--cinematic-border) !important;
+    border-radius: 16px !important;
+    padding: 32px !important;
+}
+
+.ex-testimonials p {
+    color: var(--cinematic-text-secondary) !important;
+}
+
+.ex-testimonials h5 {
+    color: var(--cinematic-text) !important;
+}
+
+.testinn_img {
+    border: 2px solid var(--cinematic-accent) !important;
+}
+
+/* Forms */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    background-color: var(--cinematic-bg-card) !important;
+    border: 1px solid var(--cinematic-border) !important;
+    color: var(--cinematic-text) !important;
+    border-radius: 8px !important;
+    padding: 14px 18px !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--cinematic-accent) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(212, 166, 90, 0.2) !important;
+}
+
+/* Footer */
+footer,
+.ex-footer {
+    background-color: var(--cinematic-bg-secondary) !important;
+    border-top: 1px solid var(--cinematic-border) !important;
+    color: var(--cinematic-text-muted) !important;
+}
+
+footer p,
+.ex-footer p {
+    color: var(--cinematic-text-muted) !important;
+}
+
+/* Owl carousel dots */
+.owl-theme .owl-dots .owl-dot span {
+    background-color: var(--cinematic-border) !important;
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+    background-color: var(--cinematic-accent) !important;
+}
+
+/* Login/Auth pages */
+.auth-container,
+.login-container,
+.register-container {
+    background-color: var(--cinematic-bg-card) !important;
+    border: 1px solid var(--cinematic-border) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Dashboard/Admin dark theme */
+.admin-header,
+.dashboard-header {
+    background-color: var(--cinematic-bg-secondary) !important;
+    border-bottom: 1px solid var(--cinematic-border) !important;
+}
+
+.sidebar,
+.admin-sidebar {
+    background-color: var(--cinematic-bg-secondary) !important;
+    border-right: 1px solid var(--cinematic-border) !important;
+}
+
+/* Tables */
+table {
+    background-color: var(--cinematic-bg-card) !important;
+    border-color: var(--cinematic-border) !important;
+}
+
+th {
+    background-color: var(--cinematic-bg-secondary) !important;
+    color: var(--cinematic-text) !important;
+    border-color: var(--cinematic-border) !important;
+}
+
+td {
+    color: var(--cinematic-text-secondary) !important;
+    border-color: var(--cinematic-border) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--cinematic-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--cinematic-border);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cinematic-accent);
+}
+
+/* Selection color */
+::selection {
+    background-color: var(--cinematic-accent) !important;
+    color: var(--cinematic-bg) !important;
+}
