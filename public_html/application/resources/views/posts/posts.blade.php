@@ -335,8 +335,10 @@
                             behavior: 'smooth'
                         });
                     } else {
-                        // Desktop or non-sticky: just scroll to section with small buffer
-                        const targetPosition = targetSection.offsetTop - 80;
+                        // Desktop or non-sticky: account for fixed header + buffer
+                        const headerHeight = document.querySelector('.main-header')?.offsetHeight || 70;
+                        const buffer = 20;
+                        const targetPosition = targetSection.offsetTop - headerHeight - buffer;
                         window.scrollTo({
                             top: targetPosition,
                             behavior: 'smooth'
@@ -359,9 +361,9 @@
             if (isManualNavigation) return;
             
             let current = '';
-            // Detection offset: sticky nav height (128px) + small buffer
-            // This ensures we detect the section that's actually visible below the nav
-            const scrollPos = window.scrollY + 140;
+            // Detection offset: header height + buffer for accurate section detection
+            const headerHeight = document.querySelector('.main-header')?.offsetHeight || 70;
+            const scrollPos = window.scrollY + headerHeight + 20;
             
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
