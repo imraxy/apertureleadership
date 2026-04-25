@@ -298,6 +298,9 @@
         window.addEventListener('resize', handleScroll);
         
         // Smooth scroll for nav links
+        let isManualNavigation = false;
+        let manualNavTimeout;
+        
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -306,6 +309,10 @@
                 const targetSection = document.getElementById(targetId);
                 
                 if (targetSection) {
+                    // Set flag to prevent scroll spy from overriding
+                    isManualNavigation = true;
+                    clearTimeout(manualNavTimeout);
+                    
                     // Update active state immediately
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
@@ -321,6 +328,11 @@
                         top: targetPosition,
                         behavior: 'smooth'
                     });
+                    
+                    // Clear flag after smooth scroll completes (approx 500ms for smooth scroll)
+                    manualNavTimeout = setTimeout(() => {
+                        isManualNavigation = false;
+                    }, 600);
                 }
             });
         });
@@ -329,6 +341,9 @@
         const sections = document.querySelectorAll('.guideline-card');
         
         function updateActiveLink() {
+            // Don't update during manual navigation
+            if (isManualNavigation) return;
+            
             let current = '';
             // Use a small offset to detect which section is in view
             // The top of the viewport + a small buffer
