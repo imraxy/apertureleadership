@@ -4,7 +4,7 @@
     /* Elegant Guidelines Page Styling */
     .guidelines-hero {
         background: linear-gradient(135deg, #0a0a0c 0%, #1a1a1e 100%);
-        padding: 80px 0 60px;
+        padding: 60px 0 20px;
         position: relative;
         overflow: hidden;
     }
@@ -64,6 +64,10 @@
         border-radius: 16px;
         padding: 24px;
         border: 1px solid #25252a;
+        position: sticky;
+        top: 100px;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
     }
     
     .guidelines-nav h3 {
@@ -111,12 +115,6 @@
         padding: 40px;
         margin-bottom: 24px;
         border: 1px solid #25252a;
-        transition: all 0.3s ease;
-    }
-    
-    .guideline-card:hover {
-        border-color: #d4a65a;
-        transform: translateY(-2px);
     }
     
     .guideline-card h3 {
@@ -135,26 +133,94 @@
         margin-bottom: 16px;
     }
     
-    .guideline-card p:last-child {
-        margin-bottom: 0;
-    }
-    
+    /* Mobile Styles */
     @media (max-width: 992px) {
+        .guidelines-container {
+            padding: 0;
+        }
+        
         .guidelines-layout {
             flex-direction: column;
             padding: 0 20px;
+            gap: 0;
         }
         
         .guidelines-sidebar {
             width: 100%;
+            margin: 0 -20px;
+            padding: 15px 20px;
+            background: #0f0f12;
+            border-bottom: 1px solid #25252a;
+            position: relative;
+        }
+        
+        .guidelines-sidebar.is-sticky {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            margin: 0;
+        }
+        
+        .guidelines-sidebar.is-sticky + .guidelines-content {
+            padding-top: 70px;
         }
         
         .guidelines-nav {
             position: relative;
+            top: auto;
+            max-height: none;
+            overflow-y: visible;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+        
+        .guidelines-nav h3 {
+            display: none;
+        }
+        
+        .guidelines-nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .guidelines-nav li {
+            margin-bottom: 0;
+        }
+        
+        .guidelines-nav a {
+            white-space: nowrap;
+            font-size: 12px;
+            padding: 8px 12px;
+            background: #1a1a1e;
+            border: 1px solid #2a2a30;
+            border-radius: 20px;
+        }
+        
+        .guidelines-nav a.active {
+            background: rgba(212, 166, 90, 0.2);
+            border-color: #d4a65a;
+            color: #d4a65a;
+        }
+        
+        .desktop-only {
+            display: none !important;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .guidelines-nav a {
+            font-size: 11px;
+            padding: 6px 10px;
         }
     }
 </style>
 @endpush
+
 @section('content')
     <!-- Elegant Hero -->
     <section class="guidelines-hero">
@@ -198,6 +264,96 @@
             </div>
         </div>
     </section>
-	
 @endsection
 
+@push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.guidelines-nav a');
+        const sidebar = document.querySelector('.guidelines-sidebar');
+        const hero = document.querySelector('.guidelines-hero');
+        let isSticky = false;
+        
+        // Handle sticky behavior on scroll
+        function handleScroll() {
+            if (window.innerWidth > 992) return;
+            
+            const heroBottom = hero.offsetTop + hero.offsetHeight;
+            const scrollPos = window.scrollY;
+            
+            if (scrollPos > heroBottom - 70) {
+                if (!isSticky) {
+                    sidebar.classList.add('is-sticky');
+                    isSticky = true;
+                }
+            } else {
+                if (isSticky) {
+                    sidebar.classList.remove('is-sticky');
+                    isSticky = false;
+                }
+            }
+        }
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        
+        // Smooth scroll for nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    // Update active state
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Calculate offset based on mobile sticky state
+                    // When sticky nav is visible, we need extra offset for its height
+                    const stickyNavHeight = window.innerWidth <= 992 ? 110 : 0;
+                    const baseOffset = 20; // Small buffer
+                    const targetPosition = targetSection.offsetTop - stickyNavHeight - baseOffset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Update active link on scroll
+        const sections = document.querySelectorAll('.guideline-card');
+        
+        function updateActiveLink() {
+            let current = '';
+            const stickyNavHeight = window.innerWidth <= 992 ? 110 : 0;
+            const scrollPos = window.scrollY + stickyNavHeight + 40;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    current = sectionId;
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveLink);
+        
+        // Initial check
+        handleScroll();
+    });
+</script>
+@endpush
