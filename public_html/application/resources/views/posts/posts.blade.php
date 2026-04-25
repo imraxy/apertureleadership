@@ -335,12 +335,11 @@
                             behavior: 'smooth'
                         });
                     } else {
-                        // Desktop or non-sticky: account for fixed header + buffer
-                        const headerHeight = document.querySelector('.main-header')?.offsetHeight || 70;
-                        const buffer = 20;
-                        const targetPosition = targetSection.offsetTop - headerHeight - buffer;
+                        // Desktop or non-sticky: scroll section to top of viewport below fixed header
+                        const headerHeight = document.querySelector('header')?.offsetHeight || 70;
+                        const targetPosition = targetSection.offsetTop - headerHeight - 10; // Small buffer of 10px
                         window.scrollTo({
-                            top: targetPosition,
+                            top: Math.max(0, targetPosition),
                             behavior: 'smooth'
                         });
                     }
