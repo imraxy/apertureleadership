@@ -336,8 +336,10 @@
                         });
                     } else {
                         // Desktop or non-sticky: scroll section to top of viewport below fixed header
-                        const headerHeight = document.querySelector('header')?.offsetHeight || 70;
-                        const targetPosition = targetSection.offsetTop - headerHeight - 10; // Small buffer of 10px
+                        const header = document.querySelector('.main-header') || document.querySelector('header') || document.querySelector('.navbar');
+                        const headerHeight = header?.offsetHeight || 70;
+                        const buffer = 25; // Increased buffer to ensure heading is clearly visible
+                        const targetPosition = targetSection.offsetTop - headerHeight - buffer;
                         window.scrollTo({
                             top: Math.max(0, targetPosition),
                             behavior: 'smooth'
