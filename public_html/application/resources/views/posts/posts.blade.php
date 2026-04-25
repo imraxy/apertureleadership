@@ -306,15 +306,16 @@
                 const targetSection = document.getElementById(targetId);
                 
                 if (targetSection) {
-                    // Update active state
+                    // Update active state immediately
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Calculate offset based on mobile sticky state
-                    // When sticky nav is visible, we need extra offset for its height
-                    const stickyNavHeight = window.innerWidth <= 992 ? 110 : 0;
-                    const baseOffset = 20; // Small buffer
-                    const targetPosition = targetSection.offsetTop - stickyNavHeight - baseOffset;
+                    // Calculate the correct offset
+                    // Get the actual sticky nav height if visible
+                    const stickyNav = document.querySelector('.guidelines-sidebar.is-sticky');
+                    const navHeight = stickyNav ? stickyNav.offsetHeight : 0;
+                    const buffer = 10; // Small gap
+                    const targetPosition = targetSection.offsetTop - navHeight - buffer;
                     
                     window.scrollTo({
                         top: targetPosition,
@@ -329,8 +330,9 @@
         
         function updateActiveLink() {
             let current = '';
-            const stickyNavHeight = window.innerWidth <= 992 ? 110 : 0;
-            const scrollPos = window.scrollY + stickyNavHeight + 40;
+            // Use a small offset to detect which section is in view
+            // The top of the viewport + a small buffer
+            const scrollPos = window.scrollY + 120;
             
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
