@@ -318,16 +318,30 @@
                     this.classList.add('active');
                     
                     // Calculate the correct offset
-                    // Get the actual sticky nav height if visible
+                    // Get the actual sticky nav if visible
                     const stickyNav = document.querySelector('.guidelines-sidebar.is-sticky');
-                    const navHeight = stickyNav ? stickyNav.offsetHeight : 0;
-                    const buffer = 10; // Small gap
-                    const targetPosition = targetSection.offsetTop - navHeight - buffer;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
+                    if (stickyNav) {
+                        // Mobile: nav is fixed at top: 70px with its own height
+                        // The nav bottom is at (70px + navHeight) from the top of viewport
+                        // We want section to start (navHeight + buffer) pixels below current scroll
+                        const navRect = stickyNav.getBoundingClientRect();
+                        const navTotalHeight = navRect.bottom; // Distance from viewport top to nav bottom
+                        const buffer = 20; // Additional gap
+                        // Scroll so that target section top aligns with (navTotalHeight + buffer) in viewport
+                        const targetPosition = targetSection.offsetTop - navTotalHeight - buffer;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        // Desktop or non-sticky: just scroll to section with small buffer
+                        const targetPosition = targetSection.offsetTop - 80;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
                     
                     // Clear flag after smooth scroll completes (approx 500ms for smooth scroll)
                     manualNavTimeout = setTimeout(() => {
