@@ -345,9 +345,9 @@
             if (isManualNavigation) return;
             
             let current = '';
-            // Use a small offset to detect which section is in view
-            // The top of the viewport + a small buffer
-            const scrollPos = window.scrollY + 120;
+            // Detection offset: sticky nav height (128px) + small buffer
+            // This ensures we detect the section that's actually visible below the nav
+            const scrollPos = window.scrollY + 140;
             
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
