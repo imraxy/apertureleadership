@@ -115,6 +115,7 @@
         padding: 40px;
         margin-bottom: 24px;
         border: 1px solid #25252a;
+        scroll-margin-top: 200px;
     }
     
     .guideline-card h3 {
@@ -317,36 +318,10 @@
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Calculate the correct offset
-                    // Get the actual sticky nav if visible
-                    const stickyNav = document.querySelector('.guidelines-sidebar.is-sticky');
-                    if (stickyNav) {
-                        // Mobile: nav is fixed at top: 70px with its own height
-                        // The nav bottom is at (70px + navHeight) from the top of viewport
-                        // We want section to start (navHeight + buffer) pixels below current scroll
-                        const navRect = stickyNav.getBoundingClientRect();
-                        const navTotalHeight = navRect.bottom; // Distance from viewport top to nav bottom
-                        const buffer = 20; // Additional gap
-                        // Scroll so that target section top aligns with (navTotalHeight + buffer) in viewport
-                        const targetPosition = targetSection.offsetTop - navTotalHeight - buffer;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        // Desktop or non-sticky: scroll section to top of viewport below fixed header
-                        const header = document.querySelector('.main-header') || document.querySelector('header') || document.querySelector('.navbar');
-                        const headerHeight = header?.offsetHeight || 70;
-                        const buffer = 25; // Increased buffer to ensure heading is clearly visible
-                        const targetPosition = targetSection.offsetTop - headerHeight - buffer;
-                        window.scrollTo({
-                            top: Math.max(0, targetPosition),
-                            behavior: 'smooth'
-                        });
-                    }
+                    // Use CSS scroll-margin-top - browser handles the offset
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
                     
-                    // Clear flag after smooth scroll completes (approx 500ms for smooth scroll)
+                    // Clear flag after smooth scroll completes
                     manualNavTimeout = setTimeout(() => {
                         isManualNavigation = false;
                     }, 600);
