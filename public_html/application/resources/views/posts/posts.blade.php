@@ -359,31 +359,28 @@
             if (isManualNavigation) return;
             
             let current = '';
-            const headerHeight = 62; // Match actual header height
-            const scrollBuffer = 20;
-            const threshold = headerHeight + scrollBuffer; // 82px — matches the scroll offset
             
-            // Find the section whose top is closest to threshold from above (i.e., the topmost visible section)
-            let closestSection = null;
-            let closestDistance = Infinity;
+            // Active section = the one whose top is highest in the viewport
+            // among all sections that are still at least partially visible below the header
+            let bestSection = null;
+            let highestVisibleTop = -Infinity;
             
             sections.forEach(section => {
                 const rect = section.getBoundingClientRect();
                 const sectionId = section.getAttribute('id');
                 
-                // Only consider sections that are at least partially visible
-                if (rect.bottom > headerHeight) {
-                    // Distance from the threshold to the section's top
-                    const distance = Math.abs(rect.top - threshold);
-                    if (distance < closestDistance) {
-                        closestDistance = distance;
-                        closestSection = sectionId;
+                // Only consider sections still visible below the header
+                if (rect.bottom > 62) {
+                    // Among these, pick the one whose top is highest (largest negative or smallest positive)
+                    if (rect.top > highestVisibleTop) {
+                        highestVisibleTop = rect.top;
+                        bestSection = sectionId;
                     }
                 }
             });
             
-            if (closestSection) {
-                current = closestSection;
+            if (bestSection) {
+                current = bestSection;
             }
             
             navLinks.forEach(link => {
