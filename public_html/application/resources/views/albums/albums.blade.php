@@ -96,7 +96,8 @@
     .category-filter nav ul li.tab-current a:link,
     .category-filter nav ul li.tab-current a:visited,
     .category-filter nav ul li.tab-current a:hover,
-    .category-filter nav ul li.tab-current a:active {
+    .category-filter nav ul li.tab-current a:active,
+    section.category-filter nav ul li.tab-current a {
         color: #0a0a0c !important;
         background: #d4a65a !important;
         border-color: #d4a65a !important;
