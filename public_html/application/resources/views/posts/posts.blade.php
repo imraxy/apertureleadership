@@ -157,7 +157,7 @@
         
         .guidelines-sidebar.is-sticky {
             position: fixed;
-            top: 70px;
+            top: 62px;
             left: 0;
             right: 0;
             z-index: 1000;
@@ -165,7 +165,7 @@
         }
         
         .guidelines-sidebar.is-sticky + .guidelines-content {
-            padding-top: 70px;
+            padding-top: 120px;
         }
         
         .guidelines-nav {
@@ -282,7 +282,7 @@
             const heroBottom = hero.offsetTop + hero.offsetHeight;
             const scrollPos = window.scrollY;
             
-            if (scrollPos > heroBottom - 70) {
+            if (scrollPos > heroBottom - 62) {
                 if (!isSticky) {
                     sidebar.classList.add('is-sticky');
                     isSticky = true;
@@ -318,8 +318,25 @@
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Use CSS scroll-margin-top - browser handles the offset
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                    // Calculate actual obstruction height (header + sticky sidebar if present)
+                    let obstructionHeight = 0;
+                    const mainHeader = document.querySelector('header, .main-header');
+                    if (mainHeader) obstructionHeight += mainHeader.offsetHeight;
+                    
+                    // On mobile, the sidebar becomes fixed when scrolled past hero
+                    if (sidebar && sidebar.classList.contains('is-sticky')) {
+                        obstructionHeight += sidebar.offsetHeight;
+                    }
+                    
+                    // Add small buffer (20px) for visual comfort
+                    const scrollBuffer = 20;
+                    const offset = obstructionHeight + scrollBuffer;
+                    
+                    const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
+                    window.scrollTo({
+                        top: targetTop - offset,
+                        behavior: 'smooth'
+                    });
                     
                     // Clear flag after smooth scroll completes
                     manualNavTimeout = setTimeout(() => {
