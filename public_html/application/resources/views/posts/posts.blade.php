@@ -115,7 +115,7 @@
         padding: 40px;
         margin-bottom: 24px;
         border: 1px solid #25252a;
-        scroll-margin-top: 0;
+        scroll-margin-top: 82px;
     }
     
     .guideline-card h3 {
@@ -167,6 +167,11 @@
         
         .guidelines-sidebar.is-sticky + .guidelines-content {
             padding-top: 120px;
+        }
+        
+        /* On mobile when sidebar becomes sticky, sections need more scroll margin */
+        .guidelines-sidebar.is-sticky ~ .guidelines-content .guideline-card {
+            scroll-margin-top: 120px;
         }
         
         .guidelines-nav {
@@ -322,38 +327,8 @@
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Use double requestAnimationFrame to wait for browser paint
-                    // This ensures getBoundingClientRect returns post-layout values
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            // Measure obstruction height
-                            let obstructionHeight = 0;
-                            const mainHeader = document.querySelector('header, .main-header');
-                            
-                            // Only count header if it's actually fixed/sticky (pinned to viewport)
-                            if (mainHeader) {
-                                const headerPosition = getComputedStyle(mainHeader).position;
-                                if (headerPosition === 'fixed' || headerPosition === 'sticky') {
-                                    obstructionHeight += mainHeader.offsetHeight;
-                                }
-                            }
-                            
-                            // On mobile, the sidebar becomes fixed when scrolled past hero
-                            if (sidebar && sidebar.classList.contains('is-sticky')) {
-                                obstructionHeight += sidebar.offsetHeight;
-                            }
-                            
-                            // Add generous buffer for visual comfort — more on mobile
-                            const scrollBuffer = window.innerWidth <= 992 ? 40 : 20;
-                            const offset = obstructionHeight + scrollBuffer;
-                            
-                            const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
-                            window.scrollTo({
-                                top: targetTop - offset,
-                                behavior: 'smooth'
-                            });
-                        });
-                    });
+                    // Use CSS scroll-margin-top for reliable offset (browser handles it natively)
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
                     
                     // Clear flag after smooth scroll completes
                     manualNavTimeout = setTimeout(() => {
