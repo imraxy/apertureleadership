@@ -181,6 +181,14 @@ a:hover {
     color: var(--cinematic-accent-hover) !important;
 }
 
+/* Exception: Active category filter buttons should have dark text */
+.category-filter nav ul li.tab-current a,
+.category-filter nav ul li#tab-current a,
+.category-filter nav ul li.tab-current a:hover,
+.category-filter nav ul li#tab-current a:hover {
+    color: #0a0a0c !important;
+}
+
 /* Buttons */
 .ex-btncontact,
 .btn-primary,
