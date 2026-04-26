@@ -360,20 +360,20 @@
             
             let current = '';
             
-            // Active section = the one whose top is highest in the viewport
-            // among all sections that are still at least partially visible below the header
+            // Active section = the one closest to the header bottom (topmost visible section)
+            // Among sections still visible below the header, pick the one with the smallest effective top
             let bestSection = null;
-            let highestVisibleTop = -Infinity;
+            let smallestEffectiveTop = Infinity;
             
             sections.forEach(section => {
                 const rect = section.getBoundingClientRect();
                 const sectionId = section.getAttribute('id');
                 
-                // Only consider sections still visible below the header
                 if (rect.bottom > 62) {
-                    // Among these, pick the one whose top is highest (largest negative or smallest positive)
-                    if (rect.top > highestVisibleTop) {
-                        highestVisibleTop = rect.top;
+                    // For sections scrolled past (rect.top < 62), their effective position is at the header
+                    const effectiveTop = Math.max(62, rect.top);
+                    if (effectiveTop < smallestEffectiveTop) {
+                        smallestEffectiveTop = effectiveTop;
                         bestSection = sectionId;
                     }
                 }
