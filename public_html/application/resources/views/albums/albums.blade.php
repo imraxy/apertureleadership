@@ -50,6 +50,10 @@
         z-index: 100;
     }
     
+    .category-filter nav {
+        display: block;
+    }
+    
     .category-filter nav ul {
         display: flex;
         justify-content: center;
@@ -60,8 +64,12 @@
         flex-wrap: wrap;
     }
     
+    .category-filter nav ul li {
+        display: list-item;
+    }
+    
     .category-filter nav ul li a {
-        display: block;
+        display: inline-block;
         padding: 12px 24px;
         color: #a0a0a8;
         text-decoration: none;
@@ -82,21 +90,16 @@
         border-color: rgba(212, 166, 90, 0.3);
     }
     
+    /* Active/Current Tab - Force Dark Text on Gold Background */
     .category-filter nav ul li.tab-current a,
-    .category-filter nav ul li#tab-current a {
+    .category-filter nav ul li#tab-current a,
+    .category-filter nav ul li.tab-current a:link,
+    .category-filter nav ul li.tab-current a:visited,
+    .category-filter nav ul li.tab-current a:hover,
+    .category-filter nav ul li.tab-current a:active {
         color: #0a0a0c !important;
         background: #d4a65a !important;
         border-color: #d4a65a !important;
-        line-height: 1.4 !important;
-        padding: 12px 24px !important;
-        display: block !important;
-    }
-    
-    .category-filter nav ul li.tab-current a span,
-    .category-filter nav ul li#tab-current a span {
-        color: #0a0a0c !important;
-        display: inline-block !important;
-        line-height: 1.4 !important;
     }
     
     .category-filter nav ul li.tab-current a:hover,
