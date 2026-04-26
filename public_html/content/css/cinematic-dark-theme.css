@@ -239,6 +239,7 @@ a:hover {
     color: #0a0a0c !important;
     background-color: var(--cinematic-accent) !important;
     border-color: var(--cinematic-accent) !important;
+    -webkit-text-fill-color: #0a0a0c !important;
 }
 
 /* Album boxes/Photo cards */
