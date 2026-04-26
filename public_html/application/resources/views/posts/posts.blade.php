@@ -322,26 +322,36 @@
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Use requestAnimationFrame to ensure layout is settled before measuring
+                    // Use double requestAnimationFrame to wait for browser paint
+                    // This ensures getBoundingClientRect returns post-layout values
                     requestAnimationFrame(() => {
-                        // Measure obstruction height AFTER rAF for accurate dimensions
-                        let obstructionHeight = 0;
-                        const mainHeader = document.querySelector('header, .main-header');
-                        if (mainHeader) obstructionHeight += mainHeader.offsetHeight;
-                        
-                        // On mobile, the sidebar becomes fixed when scrolled past hero
-                        if (sidebar && sidebar.classList.contains('is-sticky')) {
-                            obstructionHeight += sidebar.offsetHeight;
-                        }
-                        
-                        // Add buffer for visual comfort
-                        const scrollBuffer = 20;
-                        const offset = obstructionHeight + scrollBuffer;
-                        
-                        const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
-                        window.scrollTo({
-                            top: targetTop - offset,
-                            behavior: 'smooth'
+                        requestAnimationFrame(() => {
+                            // Measure obstruction height
+                            let obstructionHeight = 0;
+                            const mainHeader = document.querySelector('header, .main-header');
+                            
+                            // Only count header if it's actually fixed/sticky (pinned to viewport)
+                            if (mainHeader) {
+                                const headerPosition = getComputedStyle(mainHeader).position;
+                                if (headerPosition === 'fixed' || headerPosition === 'sticky') {
+                                    obstructionHeight += mainHeader.offsetHeight;
+                                }
+                            }
+                            
+                            // On mobile, the sidebar becomes fixed when scrolled past hero
+                            if (sidebar && sidebar.classList.contains('is-sticky')) {
+                                obstructionHeight += sidebar.offsetHeight;
+                            }
+                            
+                            // Add generous buffer for visual comfort — more on mobile
+                            const scrollBuffer = window.innerWidth <= 992 ? 40 : 20;
+                            const offset = obstructionHeight + scrollBuffer;
+                            
+                            const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
+                            window.scrollTo({
+                                top: targetTop - offset,
+                                behavior: 'smooth'
+                            });
                         });
                     });
                     
