@@ -115,7 +115,7 @@
         padding: 40px;
         margin-bottom: 24px;
         border: 1px solid #25252a;
-        scroll-margin-top: 200px;
+        scroll-margin-top: 0;
     }
     
     .guideline-card h3 {
@@ -162,6 +162,7 @@
             right: 0;
             z-index: 1000;
             margin: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         
         .guidelines-sidebar.is-sticky + .guidelines-content {
@@ -279,10 +280,13 @@
         function handleScroll() {
             if (window.innerWidth > 992) return;
             
+            const mainHeaderEl = document.querySelector('header, .main-header');
+            const headerHeight = mainHeaderEl ? mainHeaderEl.offsetHeight : 62;
+            
             const heroBottom = hero.offsetTop + hero.offsetHeight;
             const scrollPos = window.scrollY;
             
-            if (scrollPos > heroBottom - 62) {
+            if (scrollPos > heroBottom - headerHeight) {
                 if (!isSticky) {
                     sidebar.classList.add('is-sticky');
                     isSticky = true;
@@ -318,22 +322,22 @@
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Calculate actual obstruction height (header + sticky sidebar if present)
-                    let obstructionHeight = 0;
-                    const mainHeader = document.querySelector('header, .main-header');
-                    if (mainHeader) obstructionHeight += mainHeader.offsetHeight;
-                    
-                    // On mobile, the sidebar becomes fixed when scrolled past hero
-                    if (sidebar && sidebar.classList.contains('is-sticky')) {
-                        obstructionHeight += sidebar.offsetHeight;
-                    }
-                    
-                    // Add small buffer (20px) for visual comfort
-                    const scrollBuffer = 20;
-                    const offset = obstructionHeight + scrollBuffer;
-                    
-                    // Use requestAnimationFrame to ensure layout is settled before calculating scroll position
+                    // Use requestAnimationFrame to ensure layout is settled before measuring
                     requestAnimationFrame(() => {
+                        // Measure obstruction height AFTER rAF for accurate dimensions
+                        let obstructionHeight = 0;
+                        const mainHeader = document.querySelector('header, .main-header');
+                        if (mainHeader) obstructionHeight += mainHeader.offsetHeight;
+                        
+                        // On mobile, the sidebar becomes fixed when scrolled past hero
+                        if (sidebar && sidebar.classList.contains('is-sticky')) {
+                            obstructionHeight += sidebar.offsetHeight;
+                        }
+                        
+                        // Add buffer for visual comfort
+                        const scrollBuffer = 20;
+                        const offset = obstructionHeight + scrollBuffer;
+                        
                         const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
                         window.scrollTo({
                             top: targetTop - offset,
@@ -360,8 +364,11 @@
             
             let current = '';
             
+            // Get actual header height — the page may render differently on mobile
+            const mainHeaderEl = document.querySelector('header, .main-header');
+            const headerHeight = mainHeaderEl ? mainHeaderEl.offsetHeight : 62;
+            
             // Active section = the one closest to the header bottom (topmost visible section)
-            // Among sections still visible below the header, pick the one with the smallest effective top
             let bestSection = null;
             let smallestEffectiveTop = Infinity;
             
@@ -369,9 +376,9 @@
                 const rect = section.getBoundingClientRect();
                 const sectionId = section.getAttribute('id');
                 
-                if (rect.bottom > 62) {
-                    // For sections scrolled past (rect.top < 62), their effective position is at the header
-                    const effectiveTop = Math.max(62, rect.top);
+                if (rect.bottom > headerHeight) {
+                    // For sections scrolled past (rect.top < headerHeight), their effective position is at the header
+                    const effectiveTop = Math.max(headerHeight, rect.top);
                     if (effectiveTop < smallestEffectiveTop) {
                         smallestEffectiveTop = effectiveTop;
                         bestSection = sectionId;
