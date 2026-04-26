@@ -68,13 +68,99 @@ header p,
     color: var(--cinematic-accent) !important;
 }
 
-/* Headings */
-h1, h2, h3, h4, h5, h6,
+/* Headings - ALL GOLDEN */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--cinematic-accent) !important;
+}
+
+/* Section Headings - Golden Accent */
 .ex-latestsession h2,
 .ex-aboutsection h2,
 .ex-testimonialsection h2,
-.ex-contactsection h2 {
+.ex-contactsection h2,
+.ex-guidelinessection h2,
+.ex-postsection h2,
+.ex-register-banner .banner-text h2,
+.banner-text h2,
+.ex-aboutsection h3,
+.ex-latestsession h3,
+.ex-testimonialsection h3,
+.ex-contactsection h3,
+.ex-guidelinessection h3,
+.ex-postsection h3,
+.ex-letswork h2,
+.ex-letswork h3,
+.contact-pageheader h2,
+.page-title h1,
+.page-title h2,
+.section-title h1,
+.section-title h2,
+.section-title h3,
+.section-heading,
+.section-header h2,
+.section-header h3,
+.content-section h2,
+.content-section h3,
+.main-content h2,
+.main-content h3 {
+    color: var(--cinematic-accent) !important;
+    text-shadow: 0 0 30px rgba(212, 166, 90, 0.3) !important;
+}
+
+/* Subheadings and smaller headings stay white/light */
+.ex-latestsession h4,
+.ex-aboutsection h4,
+.ex-testimonialsection h4,
+.ex-contactsection h4,
+.ex-guidelinessection h4,
+.ex-postsection h4,
+.card-title,
+.box-title,
+.widget-title {
     color: var(--cinematic-text) !important;
+}
+
+/* Specific Page Headings - Golden */
+.page-title,
+h1.page-title,
+h2.page-title,
+.hero-title,
+.hero-title span,
+.showcase-header h2,
+.testimonials-section h2,
+.about-text h2,
+.contact-info-card h3,
+.contact-form-card h3 {
+    color: var(--cinematic-accent) !important;
+    text-shadow: 0 0 30px rgba(212, 166, 90, 0.3) !important;
+}
+
+/* Hero title specific styling */
+.hero-title {
+    background: linear-gradient(135deg, #d4a65a 0%, #e4b66a 50%, #d4a65a 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: none !important;
+}
+
+.hero-title span {
+    background: linear-gradient(135deg, #e4b66a 0%, #f0c87a 50%, #e4b66a 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+/* Album/Gallery Page Headings - Golden */
+.albums-page .page-title,
+.album-detail-page h1.title,
+.album-detail-page h1,
+.image-title,
+.photo-title,
+.gallery-title,
+.session-title {
+    color: var(--cinematic-accent) !important;
+    text-shadow: 0 0 30px rgba(212, 166, 90, 0.3) !important;
 }
 
 /* Paragraphs */

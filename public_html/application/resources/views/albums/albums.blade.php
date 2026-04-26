@@ -99,18 +99,17 @@
         min-height: 60vh;
     }
     
-    /* Masonry Grid Layout */
+    /* Masonry Grid Layout - Preserve Aspect Ratios */
     .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        grid-auto-rows: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         gap: 24px;
         max-width: 1400px;
         margin: 0 auto;
         padding: 0 40px;
     }
     
-    /* Gallery Item */
+    /* Gallery Item - Maintain Natural Aspect Ratio */
     .gallery-item {
         position: relative;
         border-radius: 12px;
@@ -119,6 +118,7 @@
         cursor: pointer;
         transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        height: fit-content;
     }
     
     .gallery-item:hover {
@@ -126,28 +126,22 @@
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
     
+    .gallery-item a.photoswipe-trigger {
+        display: block;
+        width: 100%;
+        line-height: 0;
+    }
+    
     .gallery-item img {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        height: auto;
+        display: block;
         transition: transform 0.5s ease;
+        /* Remove object-fit: cover to preserve natural aspect ratio */
     }
     
     .gallery-item:hover img {
-        transform: scale(1.05);
-    }
-    
-    /* Dynamic heights for masonry effect */
-    .gallery-item.portrait {
-        grid-row: span 35;
-    }
-    
-    .gallery-item.landscape {
-        grid-row: span 25;
-    }
-    
-    .gallery-item.square {
-        grid-row: span 30;
+        transform: scale(1.02);
     }
     
     /* Image Overlay */
@@ -265,21 +259,9 @@
     /* Responsive */
     @media (max-width: 768px) {
         .gallery-grid {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 16px;
             padding: 0 20px;
-        }
-        
-        .gallery-item.portrait {
-            grid-row: span 30;
-        }
-        
-        .gallery-item.landscape {
-            grid-row: span 20;
-        }
-        
-        .gallery-item.square {
-            grid-row: span 25;
         }
         
         .category-filter nav ul {
@@ -362,24 +344,11 @@
         <div class="gallery-grid" itemscope itemtype="http://schema.org/ImageGallery">
             @foreach($albums as $album)
             @php
-                // Determine aspect ratio class
-                $width = $album->width ?? 800;
-                $height = $album->height ?? 600;
-                $ratio = $width / $height;
-                
-                if ($ratio < 0.8) {
-                    $aspectClass = 'portrait';
-                } elseif ($ratio > 1.3) {
-                    $aspectClass = 'landscape';
-                } else {
-                    $aspectClass = 'square';
-                }
-                
                 // Get category name
                 $categoryName = $album->albumCategory ? $album->albumCategory->name : 'Uncategorized';
             @endphp
             
-            <figure itemprop="associatedMedia" class="gallery-item {{ $aspectClass }} ext{{$album->id}}" itemscope itemtype="http://schema.org/ImageObject">
+            <figure itemprop="associatedMedia" class="gallery-item ext{{$album->id}}" itemscope itemtype="http://schema.org/ImageObject">
                 <a href="{{asset('application/public/uploads/albums')}}/{{$album->id}}/{{$album->session_image}}" 
                    itemprop="contentUrl" 
                    data-size="{{$album->width}}x{{$album->height}}"
