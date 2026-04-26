@@ -332,16 +332,21 @@
                     const scrollBuffer = 20;
                     const offset = obstructionHeight + scrollBuffer;
                     
-                    const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
-                    window.scrollTo({
-                        top: targetTop - offset,
-                        behavior: 'smooth'
+                    // Use requestAnimationFrame to ensure layout is settled before calculating scroll position
+                    requestAnimationFrame(() => {
+                        const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
+                        window.scrollTo({
+                            top: targetTop - offset,
+                            behavior: 'smooth'
+                        });
                     });
                     
                     // Clear flag after smooth scroll completes
                     manualNavTimeout = setTimeout(() => {
                         isManualNavigation = false;
-                    }, 600);
+                        // Force an immediate active link update after the timeout to correct any mismatch
+                        updateActiveLink();
+                    }, 800);
                 }
             });
         });
@@ -354,8 +359,9 @@
             if (isManualNavigation) return;
             
             let current = '';
-            // Detection offset: header height + buffer for accurate section detection
-            const headerHeight = document.querySelector('.main-header')?.offsetHeight || 70;
+            // Use actual header height for detection offset, fallback to 62px
+            const mainHeader = document.querySelector('header, .main-header');
+            const headerHeight = mainHeader ? mainHeader.offsetHeight : 62;
             const scrollPos = window.scrollY + headerHeight + 20;
             
             sections.forEach(section => {
