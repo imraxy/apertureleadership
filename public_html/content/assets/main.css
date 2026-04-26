@@ -1,0 +1,138 @@
+/**
+ * dashboard 
+ */
+.m-widget26__number {
+    text-align: center;
+}
+
+/* End  */
+
+
+/* Sider bar */
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--active>.m-menu__heading .m-menu__link-icon, .m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--active>.m-menu__link .m-menu__link-icon {
+    color: #ffffff;
+}
+
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--active>.m-menu__heading .m-menu__link-text, .m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--active>.m-menu__link .m-menu__link-text {
+    color: #ffffff;
+}
+
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--expanded>.m-menu__heading .m-menu__link-icon, .m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--expanded>.m-menu__link .m-menu__link-icon {
+    color: #ffffff;
+}
+
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--expanded>.m-menu__heading .m-menu__ver-arrow, .m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--expanded>.m-menu__link .m-menu__ver-arrow {
+    color: #ffffff;
+}
+
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--expanded>.m-menu__heading .m-menu__link-text, .m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--expanded>.m-menu__link .m-menu__link-text {
+    color: #ffffff;
+}
+/* sider bar end */
+
+.loaderific {
+	    background: hsla(0,0%,100%,.5);
+	    position: fixed;
+	    top: 0;
+	    bottom: 0;
+	    right: 0;
+	    left: 0;
+	    z-index: 1000;
+	    display: none;
+
+	    display: -webkit-box;
+	    display: -ms-flexbox;
+	    display: flex;
+	    -webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	    justify-content: center;
+	    -webkit-box-align: center;
+	    -ms-flex-align: center;
+	    align-items: center;
+}
+
+.loaderific .loaderific-spinner {
+    
+    border-bottom: 3px solid #d8d8d8;
+    border-left: 3px solid #d8d8d8;
+    border-radius: 100%;
+    border-right: 3px solid #d8d8d8;
+    border-top: 3px solid #000000;
+    height: 60px;
+    _left: 50%;
+    _margin-left: -33px;
+    _margin-top: -33px;
+    position: absolute;
+    _top: 50%;
+    width: 60px;
+    
+    -webkit-animation-name: spin;
+    -webkit-animation-duration: .5s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin;
+    -moz-animation-duration: .5s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: spin;
+    -ms-animation-duration: .5s;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+    
+    animation-name: spin;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@-ms-keyframes spin {
+    from { -ms-transform: rotate(0deg); }
+    to { -ms-transform: rotate(360deg); }
+}
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+
+.button-component .loader-svg-holder .circle, .full-width-button circle {
+    stroke: #fff !important;
+}
+.loader-svg-holder .circle {
+    border-radius: 50%;
+    display: table;
+    stroke: #1390d3;
+    stroke-width: 2.5px;
+    stroke-dashoffset: unset;
+    stroke-dasharray: 41px;
+    stroke-linecap: round;
+}
+
+.loader-svg-holder .circle, .mobile-loader .circle {
+    fill: none;
+    animation: spin 1s linear infinite;
+    transform: rotate(-90deg);
+    transform-origin: 50%;
+    position: relative;
+}
+.primary-btn-color, .primary-btn-color-opaque, .btn.primary-btn-color, body.wap .btn.primary-btn-color, .send_enquiry_btn.primary-btn-color, .enquiryForm .send-enquiry.primary-btn-color, .wap .listing-outerDiv .add-to-cart.primary-btn-color, body.wap .dlryadrwp .adnwadrwp .adnwadr.primary-btn-color {
+    background-color: #c5aa40;
+    color: #fff;
+    outline-color: transparent;
+    transition: 0.3s;
+}
+
+a.rippleContainer.btn.btn-danger.m-btn.m-btn--icon.m-btn--icon-only.m-loader.m-loader--center.m-loader--center {
+    cursor: default !important;
+}

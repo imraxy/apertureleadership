@@ -322,8 +322,28 @@
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Use CSS scroll-margin-top for reliable offset (browser handles it natively)
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                        // On mobile (< 992px), calculate offset accounting for sticky sidebar
+                        if (window.innerWidth <= 992) {
+                            // Force sidebar to sticky state BEFORE calculating scroll position
+                            // This ensures the .is-sticky CSS (including padding-top on content) is active
+                            if (!isSticky) {
+                                sidebar.classList.add('is-sticky');
+                                isSticky = true;
+                            }
+                            
+                            // Measure actual obstruction at click time
+                            const mainHeaderEl = document.querySelector('header, .main-header');
+                            const headerHeight = mainHeaderEl ? mainHeaderEl.offsetHeight : 62;
+                            const sidebarHeight = sidebar.offsetHeight;
+                            // On mobile: obstruction = header + sticky sidebar pills
+                            const offset = headerHeight + sidebarHeight + 20; // 20px buffer
+                            // Use getBoundingClientRect for reliable positioning
+                            const top = targetSection.getBoundingClientRect().top + window.scrollY - offset;
+                            window.scrollTo({ top, behavior: 'smooth' });
+                        } else {
+                            // Desktop: just use scrollIntoView with CSS scroll-margin-top
+                            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
                     
                     // Clear flag after smooth scroll completes
                     manualNavTimeout = setTimeout(() => {
@@ -344,9 +364,13 @@
             
             let current = '';
             
-            // Get actual header height — the page may render differently on mobile
+            // On mobile, account for sticky sidebar as extra obstruction
             const mainHeaderEl = document.querySelector('header, .main-header');
-            const headerHeight = mainHeaderEl ? mainHeaderEl.offsetHeight : 62;
+            let headerHeight = mainHeaderEl ? mainHeaderEl.offsetHeight : 62;
+            if (window.innerWidth <= 992) {
+                // Include sticky sidebar height in the detection threshold
+                headerHeight += sidebar.offsetHeight;
+            }
             
             // Active section = the one closest to the header bottom (topmost visible section)
             let bestSection = null;

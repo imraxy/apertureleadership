@@ -1,0 +1,263 @@
+    @media(max-width:1199px) {
+        .swip-slider.swiper-container {
+            margin-bottom:0px !important;
+        }
+       
+    }
+    @media (min-width:992px) and (max-width:1024px){
+        .album-gallery figure a img {
+            max-width: 290px;
+        }
+       
+    }
+    @media(max-width:991px) {
+        .ex-title h1,
+        .ex-title h2,
+        .ex-testimonialsection h2,
+        .ex-letswork h2 {
+            font-size: 36px;
+        }
+         h2 {
+            font-size: 36px;
+        }
+        .pb-80 {
+            padding-bottom: 55px;
+        }
+        .pt-80 {
+            padding-top: 55px;
+        }
+        .ex-title p {
+            font-size: 22px;
+            line-height: 26px;
+            margin-bottom: 36px;
+        }
+        .ex-aboutleft h3 {
+            margin-right: 0;
+            margin-top: 10px;
+            font-size: 24px;
+        }
+        .ex-active-right h3 {
+            font-size: 36px;
+        }
+        .ex-active-right span {
+            font-size: 16px;
+        }
+        .ex-active-left img {
+            margin-top: 5px;
+        }
+        .ex-lsbox h4 {
+            font-size: 22px;
+            margin: 10px 0 2px;
+        }
+        .ex-testinn p {
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .ex-mainslider img {
+            display: block;
+            width: 100%;
+            height: 280px;
+        }
+        .swip-slider.swiper-container {
+            margin-bottom:0px !important;
+        }
+        .tabs-style-bar nav ul li a span {
+            font-size: 14px;
+            padding: 0px 8px;
+        }
+        .album-box {
+            max-width: 50%;
+        }
+        
+    }
+    
+    @media(max-width:767px) {
+        .slide-title-box h1 {
+            font-size: 36px;
+        }
+        
+        p.plus-icon {
+            top: -100px;
+        }
+        .pswp__caption__center {
+            line-height: 29px!important;
+        }
+
+        h2 {
+            font-size: 28px;
+            text-align: center;
+        }
+        .flip-card-inner img {
+            width: 100px;
+        }
+        .ex-menu {
+            width: 100%;
+            background: #333f48;
+            position: relative;
+        }
+        .ex-menu::before {
+            content: "";
+            background: #222;
+            height: 100%;
+            position: absolute;
+            width: 100vw;
+            transform: translateX(-50%);
+            margin-left: 50%;
+        }
+        .ex-menu .site-header {
+            padding-bottom: 5px;
+            padding-top: 5px;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+        }
+        .ex-menu .navbar-dark .navbar-nav .nav-link,
+        .ex-menu .navbar-dark .navbar-nav .nav-link:hover,
+        .ex-menu .navbar-dark .navbar-nav .nav-link:focus,
+        .ex-menu .navbar-dark .navbar-nav .nav-link.active {
+            color: #fff;
+        }
+        .ex-menu .navbar-dark .navbar-nav .nav-item:not(:first-child) {
+            margin-left: 0;
+        }
+        .ex-menu .navbar-dark .navbar-nav .nav-item {
+            border-top: 1px solid #fff;
+        }
+        .ex-menu .navbar-dark .navbar-nav .nav-item:first-child {
+            margin-top: 6px;
+        }
+        .ex-menu .navbar-dark .navbar-toggler {
+            padding: 0;
+            border: 0;
+            margin-bottom: -2px;
+            outline: none;
+        }
+        .navbar-dark .navbar-toggler-icon {
+            visibility: hidden;
+        }
+        .navbar-dark .navbar-toggler-icon::before {
+            content: "\f0c9";
+            font-family: FontAwesome;
+            font-size: 28px;
+            color: #fff;
+            visibility: visible;
+        }
+        .ex-menu .site-header::before {
+            content: "MENU";
+            position: absolute;
+            left: 40px;
+            color: #fff;
+            font-size: 18px;
+            top: 9px;
+        }
+        .pb-80,
+        .pb-50 {
+            padding-bottom: 35px;
+        }
+        .pt-80,
+        .pt-50 {
+            padding-top: 35px;
+        }
+        .swip-slider.swiper-container {
+            margin-bottom:0px !important;
+        }
+        .ex-title h1,
+        .ex-title h2,
+        .ex-testimonialsection h2,
+        .ex-letswork h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .ex-title p {
+            font-size: 20px;
+            line-height: 24px;
+            margin-bottom: 25px;
+        }
+        .bdr-right {
+            border-right: 0;
+        }
+        .ex-aboutleft {
+            text-align: center;
+        }
+        .ex-aboutright {
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+        .ex-btnreadmore {
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+        }
+        .ex-achivesection {
+            background-size: cover;
+        }
+        .ex-active-right h3 {
+            font-size: 28px;
+        }
+        .ex-activebox {
+            margin-bottom: 15px;
+            border: 1px solid #49565c;
+            padding: 7px 15px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .ex-activebox.ex-mb0 {
+            margin-bottom: 0px;
+        }
+        .ex-lsbox {
+            background: #f3f3f3;
+            padding-bottom: 15px;
+            border: 1px solid #eee;
+        }
+        .ex-lsbox h4,
+        .ex-lsbox p {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .pb-65 {
+            padding-bottom: 30px;
+        }
+        .ex-copyrights {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .ex-footsocial .text-right {
+            text-align: center !important;
+        }
+        .ex-lsbox img {
+            margin: 0 auto;
+            width: 100%;
+            object-fit: cover;
+            max-height: 200px;
+        }
+        .ex-menu .navbar-dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            content: "\f00d";
+            font-size: 24px;
+            display: block;
+            margin-top: 2px;
+        }
+        .ex-mainslider img {
+            height: 140px;
+            object-fit: cover;
+        }
+        .tabs nav a {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 2;
+        }
+        .contact-text {
+            display: none;
+        }
+        .album-gallery .album-box {
+            max-width: 100%;
+        }
+        .album-gallery .album-box {
+            max-width: 100%;
+            object-fit: cover;
+            width: 360px;
+            margin: 15px auto;
+        }
+    }

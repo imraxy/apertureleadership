@@ -326,3 +326,397 @@ td {
     background-color: var(--cinematic-accent) !important;
     color: var(--cinematic-bg) !important;
 }
+
+/* ============================================
+   AUTHENTICATION PAGES - CINEMATIC THEME
+   ============================================ */
+
+/* Auth page wrapper - full height dark background */
+.contact-pageheader,
+.ex-register-banner,
+.ex-register,
+.container .login-box,
+.auth-wrapper {
+    background: linear-gradient(135deg, var(--cinematic-bg) 0%, var(--cinematic-bg-secondary) 50%, var(--cinematic-bg) 100%) !important;
+    min-height: 100vh !important;
+    padding: 40px 0 !important;
+}
+
+/* Login/Register box styling */
+.login-box {
+    background-color: var(--cinematic-bg-card) !important;
+    border: 1px solid var(--cinematic-border) !important;
+    border-radius: 20px !important;
+    padding: 40px !important;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(212, 166, 90, 0.1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Gold accent glow at top of login box */
+.login-box::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, transparent 0%, var(--cinematic-accent) 50%, transparent 100%) !important;
+}
+
+/* Login key icon */
+.login-key {
+    color: var(--cinematic-accent) !important;
+    font-size: 48px !important;
+    margin-bottom: 20px !important;
+}
+
+.login-key i {
+    color: var(--cinematic-accent) !important;
+    text-shadow: 0 0 30px rgba(212, 166, 90, 0.5) !important;
+}
+
+/* Login/Register titles */
+.login-title {
+    color: var(--cinematic-text) !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    margin-bottom: 30px !important;
+    text-align: center !important;
+}
+
+.login-title h2 {
+    color: var(--cinematic-text) !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    margin-bottom: 10px !important;
+}
+
+.login-title p {
+    color: var(--cinematic-text-secondary) !important;
+    font-size: 16px !important;
+}
+
+/* Login form container */
+.login-form {
+    background-color: transparent !important;
+}
+
+/* Form group styling */
+.login-form .form-group {
+    margin-bottom: 24px !important;
+}
+
+/* Form labels */
+.login-form label,
+.form-control-label {
+    color: var(--cinematic-text-secondary) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+}
+
+/* Form inputs in auth pages */
+.login-form input[type="email"],
+.login-form input[type="password"],
+.login-form input[type="text"],
+.login-box .form-control {
+    background-color: var(--cinematic-bg-secondary) !important;
+    border: 1px solid var(--cinematic-border) !important;
+    color: var(--cinematic-text) !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    font-size: 16px !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+}
+
+.login-form input:focus,
+.login-box .form-control:focus {
+    border-color: var(--cinematic-accent) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 4px rgba(212, 166, 90, 0.15), 0 0 20px rgba(212, 166, 90, 0.1) !important;
+    background-color: var(--cinematic-bg) !important;
+}
+
+/* Invalid input styling */
+.login-form input.is-invalid,
+.login-box .form-control.is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15) !important;
+}
+
+/* Error messages */
+.invalid-feedback {
+    color: #ff6b6b !important;
+    font-size: 13px !important;
+    margin-top: 8px !important;
+    display: block !important;
+}
+
+/* Alert messages */
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+    color: #ff6b6b !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    margin-bottom: 24px !important;
+}
+
+.alert-success {
+    background-color: rgba(40, 167, 69, 0.1) !important;
+    border: 1px solid rgba(40, 167, 69, 0.3) !important;
+    color: #6bcf7f !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    margin-bottom: 24px !important;
+}
+
+.alert-warning {
+    background-color: rgba(255, 193, 7, 0.1) !important;
+    border: 1px solid rgba(255, 193, 7, 0.3) !important;
+    color: #ffd93d !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    margin-bottom: 24px !important;
+}
+
+/* Forgot password link */
+.login-form .btn-link {
+    color: var(--cinematic-accent) !important;
+    font-size: 13px !important;
+    text-decoration: none !important;
+    padding: 0 !important;
+    margin-left: auto !important;
+    transition: color 0.3s ease !important;
+}
+
+.login-form .btn-link:hover {
+    color: var(--cinematic-accent-hover) !important;
+    text-decoration: underline !important;
+}
+
+/* Login/Register button */
+.login-button .btn,
+.login-form button[type="submit"],
+.login-box .btn-outline-primary {
+    background: linear-gradient(135deg, var(--cinematic-accent) 0%, #c49a4e 100%) !important;
+    color: var(--cinematic-bg) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 16px 40px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    width: 100% !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(212, 166, 90, 0.3) !important;
+}
+
+.login-button .btn:hover,
+.login-form button[type="submit"]:hover,
+.login-box .btn-outline-primary:hover {
+    background: linear-gradient(135deg, var(--cinematic-accent-hover) 0%, #d4a65a 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(212, 166, 90, 0.4) !important;
+}
+
+/* Login bottom section */
+.loginbttm {
+    margin-top: 30px !important;
+    padding: 0 !important;
+}
+
+.login-btm {
+    padding: 0 !important;
+}
+
+/* Sign up link section */
+.m-login__account {
+    background-color: var(--cinematic-bg-secondary) !important;
+    border: 1px solid var(--cinematic-border) !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    margin-top: 20px !important;
+    text-align: center !important;
+}
+
+.m-login__account-msg {
+    color: var(--cinematic-text-secondary) !important;
+    font-size: 15px !important;
+}
+
+.m-login__account-link {
+    color: var(--cinematic-accent) !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+.m-login__account-link:hover {
+    color: var(--cinematic-accent-hover) !important;
+    text-decoration: underline !important;
+}
+
+/* Register page banner */
+.ex-register-banner {
+    background: linear-gradient(135deg, var(--cinematic-bg) 0%, var(--cinematic-bg-secondary) 100%) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.ex-register-banner::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -50% !important;
+    left: -50% !important;
+    width: 200% !important;
+    height: 200% !important;
+    background: radial-gradient(circle at 30% 30%, rgba(212, 166, 90, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(212, 166, 90, 0.05) 0%, transparent 40%) !important;
+    pointer-events: none !important;
+}
+
+.ex-register-banner .banner-text h2 {
+    color: var(--cinematic-text) !important;
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Register section */
+.ex-register {
+    background-color: var(--cinematic-bg) !important;
+    padding: 60px 0 !important;
+}
+
+/* CAPTCHA styling */
+.login-form label[for="captcha"] {
+    color: var(--cinematic-accent) !important;
+    font-weight: 600 !important;
+}
+
+/* Checkbox styling */
+.login-form input[type="checkbox"] {
+    accent-color: var(--cinematic-accent) !important;
+}
+
+/* Remember me label */
+.m-checkbox {
+    color: var(--cinematic-text-secondary) !important;
+    font-size: 14px !important;
+}
+
+.m-checkbox span {
+    border-color: var(--cinematic-border) !important;
+}
+
+/* Admin login specific styles */
+.m-login {
+    background: linear-gradient(135deg, var(--cinematic-bg) 0%, var(--cinematic-bg-secondary) 50%, var(--cinematic-bg) 100%) !important;
+}
+
+.m-login__container {
+    background-color: var(--cinematic-bg-card) !important;
+    border: 1px solid var(--cinematic-border) !important;
+    border-radius: 20px !important;
+    padding: 40px !important;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6) !important;
+}
+
+.m-login__logo img {
+    max-height: 60px !important;
+    margin-bottom: 20px !important;
+}
+
+.m-login__logo h2 {
+    color: var(--cinematic-accent) !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+}
+
+.m-login__title {
+    color: var(--cinematic-text) !important;
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    margin-bottom: 30px !important;
+}
+
+.m-login__form .form-control {
+    background-color: var(--cinematic-bg-secondary) !important;
+    border: 1px solid var(--cinematic-border) !important;
+    color: var(--cinematic-text) !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+}
+
+.m-login__form .form-control:focus {
+    border-color: var(--cinematic-accent) !important;
+    box-shadow: 0 0 0 4px rgba(212, 166, 90, 0.15) !important;
+}
+
+.m-login__form-input--last {
+    margin-bottom: 20px !important;
+}
+
+.m-login__btn--primary {
+    background: linear-gradient(135deg, var(--cinematic-accent) 0%, #c49a4e 100%) !important;
+    color: var(--cinematic-bg) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 16px 40px !important;
+    font-weight: 600 !important;
+    width: 100% !important;
+    transition: all 0.3s ease !important;
+}
+
+.m-login__btn--primary:hover {
+    background: linear-gradient(135deg, var(--cinematic-accent-hover) 0%, #d4a65a 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(212, 166, 90, 0.4) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .login-box {
+        padding: 30px 20px !important;
+        margin: 20px !important;
+    }
+    
+    .login-title {
+        font-size: 24px !important;
+    }
+    
+    .login-title h2 {
+        font-size: 26px !important;
+    }
+    
+    .m-login__container {
+        padding: 30px 20px !important;
+        margin: 20px !important;
+    }
+}
+
+/* Animation for auth pages */
+@keyframes authFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-box,
+.m-login__container {
+    animation: authFadeIn 0.6s ease-out !important;
+}
