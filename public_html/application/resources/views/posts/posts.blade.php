@@ -359,20 +359,32 @@
             if (isManualNavigation) return;
             
             let current = '';
-            // Use actual header height for detection offset, fallback to 62px
-            const mainHeader = document.querySelector('header, .main-header');
-            const headerHeight = mainHeader ? mainHeader.offsetHeight : 62;
-            const scrollPos = window.scrollY + headerHeight + 20;
+            const headerHeight = 62; // Match actual header height
+            const scrollBuffer = 20;
+            const threshold = headerHeight + scrollBuffer; // 82px — matches the scroll offset
+            
+            // Find the section whose top is closest to threshold from above (i.e., the topmost visible section)
+            let closestSection = null;
+            let closestDistance = Infinity;
             
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
+                const rect = section.getBoundingClientRect();
                 const sectionId = section.getAttribute('id');
                 
-                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                    current = sectionId;
+                // Only consider sections that are at least partially visible
+                if (rect.bottom > headerHeight) {
+                    // Distance from the threshold to the section's top
+                    const distance = Math.abs(rect.top - threshold);
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestSection = sectionId;
+                    }
                 }
             });
+            
+            if (closestSection) {
+                current = closestSection;
+            }
             
             navLinks.forEach(link => {
                 link.classList.remove('active');
