@@ -229,8 +229,16 @@ a:hover {
 }
 
 .tabs-style-bar nav ul li.tab-current a {
-    color: var(--cinematic-bg) !important;
+    color: #0a0a0c !important;
     background-color: var(--cinematic-accent) !important;
+}
+
+/* Albums page category filter active state */
+.category-filter nav ul li.tab-current a,
+.category-filter nav ul li#tab-current a {
+    color: #0a0a0c !important;
+    background-color: var(--cinematic-accent) !important;
+    border-color: var(--cinematic-accent) !important;
 }
 
 /* Album boxes/Photo cards */
