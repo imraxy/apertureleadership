@@ -115,7 +115,7 @@
         padding: 40px;
         margin-bottom: 24px;
         border: 1px solid #25252a;
-        scroll-margin-top: 82px;
+        scroll-margin-top: 120px;
     }
     
     .guideline-card h3 {
@@ -167,11 +167,6 @@
         
         .guidelines-sidebar.is-sticky + .guidelines-content {
             padding-top: 120px;
-        }
-        
-        /* On mobile when sidebar becomes sticky, sections need more scroll margin */
-        .guidelines-sidebar.is-sticky ~ .guidelines-content .guideline-card {
-            scroll-margin-top: 120px;
         }
         
         .guidelines-nav {
