@@ -100,6 +100,7 @@
         color: #0a0a0c !important;
         background: #d4a65a !important;
         border-color: #d4a65a !important;
+        -webkit-text-fill-color: #0a0a0c !important;
     }
     
     .category-filter nav ul li.tab-current a:hover,
