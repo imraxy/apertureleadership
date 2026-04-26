@@ -72,6 +72,8 @@
         letter-spacing: 0.5px;
         transition: all 0.3s ease;
         border: 1px solid transparent;
+        line-height: 1.4;
+        overflow: visible;
     }
     
     .category-filter nav ul li a:hover {
@@ -82,9 +84,19 @@
     
     .category-filter nav ul li.tab-current a,
     .category-filter nav ul li#tab-current a {
-        color: #0a0a0c;
-        background: #d4a65a;
-        border-color: #d4a65a;
+        color: #0a0a0c !important;
+        background: #d4a65a !important;
+        border-color: #d4a65a !important;
+        line-height: 1.4 !important;
+        padding: 12px 24px !important;
+        display: block !important;
+    }
+    
+    .category-filter nav ul li.tab-current a span,
+    .category-filter nav ul li#tab-current a span {
+        color: #0a0a0c !important;
+        display: inline-block !important;
+        line-height: 1.4 !important;
     }
     
     .category-filter nav ul li.tab-current a:hover,
