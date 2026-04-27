@@ -169,7 +169,8 @@ class SessionimagesController extends Controller
                         
                         $thumb_session_image = $request->file('session_image');
 
-                        $waterMarkUrl = public_path('copyright-img.png');
+                        // Watermark removed - images already have watermarks
+                        // $waterMarkUrl = public_path('copyright-img.png');
 
                         ##########
                         $salt_image  = bin2hex(openssl_random_pseudo_bytes(22));
@@ -190,7 +191,8 @@ class SessionimagesController extends Controller
                         // open an image file
                         $thumb_img = Image::make($thumb_session_image->getRealPath());
 
-                        $thumb_img->insert($waterMarkUrl, 'bottom', 15, 15);
+                        // Watermark removed - images already have watermarks
+                        // $thumb_img->insert($waterMarkUrl, 'bottom', 15, 15);
 
                         // now you are able to resize the instance
                         $thumb_img->save($uplode_image_path.'/'.$get_thumb_filename, 80);
@@ -300,7 +302,8 @@ class SessionimagesController extends Controller
                         unlink($uplode_image_path.'/'.$session->session_image);
                     }
 
-                    $waterMarkUrl = public_path('copyright-img.png');
+                    // Watermark removed - images already have watermarks
+                    // $waterMarkUrl = public_path('copyright-img.png');
 
                     ##########
                     $salt_image  = bin2hex(openssl_random_pseudo_bytes(22));
@@ -320,7 +323,8 @@ class SessionimagesController extends Controller
                     // open an image file
                     $thumb_img = Image::make($thumb_session_image->getRealPath());
 
-                    $thumb_img->insert($waterMarkUrl, 'bottom', 15, 15);
+                    // Watermark removed - images already have watermarks
+                    // $thumb_img->insert($waterMarkUrl, 'bottom', 15, 15);
 
                     // now you are able to resize the instance
                     $thumb_img->save($uplode_image_path.'/'.$get_thumb_filename, 80);
