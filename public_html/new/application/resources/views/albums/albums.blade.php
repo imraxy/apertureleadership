@@ -102,9 +102,8 @@
     /* Masonry Grid Layout */
     .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        grid-auto-rows: 10px;
-        gap: 24px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
         max-width: 1400px;
         margin: 0 auto;
         padding: 0 40px;
@@ -122,7 +121,7 @@
     }
     
     .gallery-item:hover {
-        transform: translateY(-8px);
+        transform: translateY(-4px);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
     
@@ -138,17 +137,11 @@
         transform: scale(1.05);
     }
     
-    /* Dynamic heights for masonry effect */
     /* All gallery items use consistent aspect ratio */
-    .gallery-item {
-        grid-row: span 28;
-        aspect-ratio: 1/1;
-    }
-    
+    .gallery-item,
     .gallery-item.portrait,
     .gallery-item.landscape,
     .gallery-item.square {
-        grid-row: span 28;
         aspect-ratio: 1/1;
     }
     
@@ -268,7 +261,7 @@
     @media (max-width: 768px) {
         .gallery-grid {
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 16px;
+            gap: 8px;
             padding: 0 20px;
         }
         
