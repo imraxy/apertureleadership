@@ -209,13 +209,12 @@
         position: absolute;
         top: 16px;
         right: 16px;
-        width: 40px;
-        height: 40px;
-        background: rgba(212, 166, 90, 0.9);
-        border-radius: 50%;
+        padding: 8px 16px;
+        background: rgba(212, 166, 90, 0.95);
+        border-radius: 20px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 8px;
         opacity: 0;
         transform: scale(0.8);
         transition: all 0.3s ease;
@@ -223,6 +222,15 @@
         border: none;
         z-index: 10;
         pointer-events: auto;
+        color: #0a0a0c;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    
+    .add-to-folder::before {
+        content: '+';
+        font-size: 16px;
+        font-weight: bold;
     }
     
     .gallery-item:hover .add-to-folder {
@@ -232,14 +240,7 @@
     
     .add-to-folder:hover {
         background: #d4a65a;
-        transform: scale(1.1) !important;
-    }
-    
-    .add-to-folder img {
-        width: 20px;
-        height: 20px;
-        filter: brightness(0);
-        pointer-events: none;
+        transform: scale(1.05) !important;
     }
     
     /* Login Section */
@@ -385,7 +386,7 @@
                 
                 @guest
                 <button class="add-to-folder toCart addtocartbtn" data-val="{{$album->id}}" title="Add to Folder">
-                    <img src="{{asset('content/images/folder-plus1.png')}}" alt="Add to folder">
+                    Add to Folder
                 </button>
                 @endguest
             </figure>
@@ -441,8 +442,8 @@
                 
                 <!-- Add to Folder Button in PhotoSwipe -->
                 <div class="pswp__add-to-folder" style="position: absolute; bottom: 80px; right: 20px; z-index: 100;">
-                    <button class="pswp-folder-btn" style="background: #d4a65a; color: #0a0a0c; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                        <img src="{{asset('content/images/folder-plus1.png')}}" style="width: 18px; height: 18px; filter: brightness(0);">
+                    <button class="pswp-folder-btn" style="background: #d4a65a; color: #0a0a0c; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                        <span style="font-size: 18px; font-weight: bold;">+</span>
                         Add to Folder
                     </button>
                 </div>
