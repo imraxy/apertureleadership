@@ -216,13 +216,6 @@ textarea.form-control {
                 
                 <div class="contact-item">
                     <div class="contact-icon">
-                        <i class="fa fa-phone"></i>
-                    </div>
-                    <p>+{{ config('settings.phone') }}</p>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-icon">
                         <i class="fa fa-envelope"></i>
                     </div>
                     <p>{{ config('settings.webmaster_email') }}</p>
