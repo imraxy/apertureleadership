@@ -385,9 +385,10 @@
                 </div>
                 
                 @guest
-                <button class="add-to-folder toCart addtocartbtn" data-val="{{$album->id}}" title="Add to Folder">
-                    Add to Folder
+                <button class="add-to-folder toCart addtocartbtn btn btn-primary btn-lg" data-val="{{$album->id}}" title="Click to add this photo to your personal folder" style="padding: 12px 24px; font-size: 16px; font-weight: 600;">
+                    + Add to Folder
                 </button>
+                <small style="display: block; margin-top: 8px; color: #a0a0a8; font-size: 12px; text-align: center;">Click to save to your folder</small>
                 @endguest
             </figure>
             @endforeach
