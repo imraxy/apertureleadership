@@ -109,12 +109,16 @@ class LoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             $user = Auth::user();
-// 			if($user->approval_code != ""){
-// 				if($user->approval_code == $request->approval_code){
-// 					if(strtotime($user->approval_code_end_time) < strtotime(date('d-m-Y H:i:s'))){
-// 						Auth::logout();
-// 						session(['login_error' => 'Your access code is expired!!']);
-// 						return redirect('/login')->with('danger','Your access code is expired!!');
+            
+            // Clear stale session data on login
+            session()->forget(['selected_photos', 'cart', 'folder_selections']);
+            
+// 			...
+            
+            return $this->sendLoginResponse($request);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
 // 					}
 // 				}else{
 // 						Auth::logout();
