@@ -339,15 +339,23 @@
     <section class="category-filter">
         <nav>
             <ul>
-                @if(request('slug'))
+                @php
+                    // Determine which tab is active - default to "people" if no slug
+                    $activeSlug = request('slug') ?: 'people';
+                    $isAllActive = request('slug') == '' || request('slug') == 'people';
+                @endphp
+                
+                @if($activeSlug != 'people' && request('slug'))
                 <li><a href="{{route('front.albums')}}">All</a></li>
-                @else
+                @elseif(request('slug') == '' || !request('slug'))
                 <li class="tab-current"><a href="{{route('front.albums')}}">All</a></li>
+                @else
+                <li><a href="{{route('front.albums')}}">All</a></li>
                 @endif
                 
                 @foreach($albumcategories as $albumcategory)
                 @php
-                    $isActive = request('slug') == $albumcategory->slug;
+                    $isActive = $activeSlug == $albumcategory->slug;
                 @endphp
                 <li class="{{ $isActive ? 'tab-current' : '' }}">
                     <a href="{{route('front.albums', $albumcategory->slug)}}">{{$albumcategory->name}}</a>
