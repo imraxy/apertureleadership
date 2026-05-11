@@ -1,0 +1,36 @@
+--- albums.blade.php.orig
++++ albums.blade.php
+@@ -50,20 +50,12 @@
+ <div class="content-wrap">
+ \t<section id="section-bar-all" class="content-current">
+ \t\t<div class="row album-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+-\t\t\t    @foreach( as )
+-\t\t\t\t    @php 
+-\t\t\t\t     = 334.64; // Max width for the image
+-\t\t\t\t\t = 250;    // Max height for the image
+-\t\t\t\t 
+-\t\t\t\t\t = ->width;    // Current image width
+-\t\t\t\t\t = ->height;  // Current image height
+-\t\t\t\t 
+-\t\t\t\t\t = min( / ,  / );
+-\t\t\t\t\t =  *  ;
+-\t\t\t\t\t =  * ;
+-\t\t\t\t    @endphp
+-\t\t\t\t    
++\t\t\t    @foreach( as )    
+ \t\t\t\t         <figure itemprop="associatedMedia" class="album-box ext{{->id}}" itemscope itemtype="http://schema.org/ImageObject">
+                              <a href="{{asset('application/public/uploads/albums')}}/{{->id}}/{{->session_image}}" itemprop="contentUrl" data-size="{{->width}}x{{->height}}">
+-                                    <img src="{{asset('application/public/uploads/albums')}}/{{->id}}/{{->small_image}}" itemprop="thumbnail" alt="Image description"  loading="lazy" style="width:{{}}px; height:{{}}px;" />
++                                    <img src="{{asset('application/public/uploads/albums')}}/{{->id}}/{{->small_image}}" itemprop="thumbnail" alt="{{->title}}"  loading="lazy" class="album-img" />
+                                 </a>
+-                               <figcaption itemprop="caption description" class="_figcaptiondescription"  <p class="img-title">{{->title}}</p> <div class="_description"></div> <p class="plus-icon toCart addtocartbtn" style="color:#fff;" data-val="{{->id}}"><img src="{{asset("content/images/folder-plus1.png")}}"> Add to Folder</p> </figcaption>
++                               <figcaption itemprop="caption description" class="_figcaptiondescription">
++                                   <p class="img-title">{{->title}}</p>
++                                   <div class="_description"></div>
++                                   <p class="plus-icon toCart addtocartbtn" data-val="{{->id}}">
++                                       <img src="{{asset('content/images/folder-plus1.png')}}" class="folder-icon" /> Add to Folder
++                                   </p>
++                               </figcaption>
+                             </figure>
+                              @endforeach
+ \t\t\t\t</div>
