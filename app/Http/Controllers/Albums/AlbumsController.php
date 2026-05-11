@@ -118,6 +118,7 @@ class AlbumsController extends Controller
             // Default to People category when no slug
             $people = AlbumCategory::where('slug', 'people')->first();
             $albums = $people ? $session_tbl->where('album_category_id', $people->id) : $session_tbl;
+        }
 		if (Auth::check()) {
 
             $albums = $albums

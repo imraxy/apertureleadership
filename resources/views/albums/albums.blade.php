@@ -18,7 +18,7 @@ margin-top: 27px!important;
 			<div class="tabs tabs-style-bar">
 				<nav>
 					<ul>
-					<!-- All tab removed - People is default -->
+						
 						@php $i = 0; @endphp
 						@foreach($albumcategories as $albumcategory)
 						@php 
