@@ -18,20 +18,20 @@ margin-top: 27px!important;
 			<div class="tabs tabs-style-bar">
 				<nav>
 					<ul>
-						@if(request('slug'))
-						<li id="tab-current">
-						@else
-						<li class="tab-current">	
-						@endif
-							<a href="{{route('front.albums')}}" class="icon icon-home"><span>All</span></a>
-						</li>
+					<!-- All tab removed - People is default -->
 						@php $i = 0; @endphp
 						@foreach($albumcategories as $albumcategory)
 						@php 
 							$i++; 
 							$tab_current_cls = '';
-							if(request('slug')==$albumcategory->slug) {
-								$tab_current_cls = 'tab-current';
+							if (request('slug')) {
+								if(request('slug')==$albumcategory->slug) {
+									$tab_current_cls = 'tab-current';
+								}
+							} else {
+								if($i == 1) {
+									$tab_current_cls = 'tab-current';
+								}
 							}	
 						@endphp
 						<li class="{{$tab_current_cls}}">
