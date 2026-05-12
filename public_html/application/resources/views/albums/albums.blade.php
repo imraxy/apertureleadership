@@ -342,16 +342,7 @@
                 @php
                     // Determine which tab is active - default to "people" if no slug
                     $activeSlug = request('slug') ?: 'people';
-                    $isAllActive = request('slug') == '' || request('slug') == 'people';
                 @endphp
-                
-                @if($activeSlug != 'people' && request('slug'))
-                <li><a href="{{route('front.albums')}}">All</a></li>
-                @elseif(request('slug') == '' || !request('slug'))
-                <li class="tab-current"><a href="{{route('front.albums')}}">All</a></li>
-                @else
-                <li><a href="{{route('front.albums')}}">All</a></li>
-                @endif
                 
                 @foreach($albumcategories as $albumcategory)
                 @php
