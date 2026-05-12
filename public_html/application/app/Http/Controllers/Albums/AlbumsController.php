@@ -24,7 +24,7 @@ class AlbumsController extends Controller
 
         }else{
 
-           $session_tbl = SessionImage::take(10); 
+           $session_tbl = SessionImage::take(20); 
         }
 
         if(!empty($slug)) {
