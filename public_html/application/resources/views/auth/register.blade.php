@@ -378,6 +378,42 @@
                             >
                         </div>
                         
+                        <div class="form-group">
+                            <label>How will you use Aperture?</label>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="session_solo" name="session_type" value="solo" class="custom-control-input" {{ old('session_type', 'solo') === 'solo' ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="session_solo" style="color:#e8e8ec;">Solo — browse the photo libraries</label>
+                            </div>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="session_group_create" name="session_type" value="group_create" class="custom-control-input" {{ old('session_type') === 'group_create' ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="session_group_create" style="color:#e8e8ec;">Group — start a new session (you receive an access code)</label>
+                            </div>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="session_group_join" name="session_type" value="group_join" class="custom-control-input" {{ old('session_type') === 'group_join' ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="session_group_join" style="color:#e8e8ec;">Group — join with an access code</label>
+                            </div>
+                            @error('session_type')
+                                <span class="cinematic-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group" id="group-code-wrap" style="display: {{ old('session_type') === 'group_join' ? 'block' : 'none' }};">
+                            <label for="group_code">Group access code</label>
+                            <input
+                                id="group_code"
+                                type="text"
+                                name="group_code"
+                                value="{{ old('group_code') }}"
+                                maxlength="6"
+                                placeholder="6-character code"
+                                autocomplete="off"
+                                style="text-transform: uppercase;"
+                            >
+                            @error('group_code')
+                                <span class="cinematic-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        
                         <!-- CAPTCHA -->
                         @php
                             $num1 = rand(1, 10);
@@ -430,5 +466,18 @@
             return false;
         return true;
     }
+
+    (function () {
+        var radios = document.querySelectorAll('input[name="session_type"]');
+        var codeWrap = document.getElementById('group-code-wrap');
+        function toggleGroupCode() {
+            var join = document.getElementById('session_group_join');
+            if (codeWrap && join) {
+                codeWrap.style.display = join.checked ? 'block' : 'none';
+            }
+        }
+        radios.forEach(function (r) { r.addEventListener('change', toggleGroupCode); });
+        toggleGroupCode();
+    })();
 </script>
 @endpush

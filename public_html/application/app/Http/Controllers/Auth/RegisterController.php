@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Services\GroupSessionService;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
@@ -63,6 +65,8 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'captcha' => ['required', 'string'],
+            'session_type' => ['required', 'in:solo,group_create,group_join'],
+            'group_code' => ['nullable', 'string', 'max:6'],
         ];
         
         $validator = Validator::make($data, $rules);
@@ -71,6 +75,9 @@ class RegisterController extends Controller
         $validator->after(function ($validator) use ($data, $expected_hash) {
             if ($data['captcha_hash'] !== $expected_hash) {
                 $validator->errors()->add('captcha', 'Security check failed. Please try again.');
+            }
+            if (($data['session_type'] ?? '') === 'group_join' && empty(trim($data['group_code'] ?? ''))) {
+                $validator->errors()->add('group_code', 'Enter the group access code you received.');
             }
         });
         
@@ -90,10 +97,34 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        // Auto-login the user after registration
         Auth::login($user);
 
-        // Redirect to albums (solo user - no approval_code)
+        $sessionType = $request->input('session_type', 'solo');
+        $service = app(GroupSessionService::class);
+
+        try {
+            if ($sessionType === 'group_create') {
+                $code = $service->assignToUser($user);
+
+                return redirect(route('account.folders'))->with(
+                    'success',
+                    'Registration successful! Your group access code is ' . $code . ' — share it with your participants.'
+                );
+            }
+
+            if ($sessionType === 'group_join') {
+                $service->assignToUser($user, $request->input('group_code'));
+
+                return redirect(route('account.folders'))->with(
+                    'success',
+                    'Registration successful! You have joined the group session.'
+                );
+            }
+        } catch (ValidationException $e) {
+            Auth::logout();
+            throw $e;
+        }
+
         return redirect(route('front.albums'))->with('success', 'Registration successful! Welcome to Aperture.');
     }
 
