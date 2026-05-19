@@ -17,7 +17,6 @@
     <link href="{{ asset('content/css/responsive.css') }}" type="text/css" rel="stylesheet">
     
     <!-- Cinematic Dark Theme Override -->
-    <link href="{{ asset('content/css/cinematic-dark-theme.css') }}?v=4" type="text/css" rel="stylesheet">
     
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
