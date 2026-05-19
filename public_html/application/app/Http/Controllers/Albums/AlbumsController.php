@@ -18,14 +18,7 @@ class AlbumsController extends Controller
      */
     public function index($slug=NULL)
     {   
-        if (Auth::check()) {
-
-            $session_tbl = new SessionImage;
-
-        }else{
-
-           $session_tbl = SessionImage::take(20); 
-        }
+        $session_tbl = new SessionImage;
 
         if(!empty($slug)) {
 
@@ -48,8 +41,14 @@ class AlbumsController extends Controller
 
         }
 
-        $albums = $albums->with('albumCategory')->orderBy('created_at','DESC')->get();
-         
+        $albums = $albums->with('albumCategory')->orderBy('created_at', 'DESC');
+
+        if (!Auth::check()) {
+            $albums = $albums->take(20);
+        }
+
+        $albums = $albums->get();
+
         $albumcategories = AlbumCategory::get();
        
 		return view('albums.albums', compact('albums', 'albumcategories', 'slug'));
@@ -70,7 +69,11 @@ class AlbumsController extends Controller
                 return abort(404);
             }
 
-            $albums = SessionImage::where('album_category_id', $category->id)->latest()->get();
+            $albums = SessionImage::where('album_category_id', $category->id)->latest();
+            if (!Auth::check()) {
+                $albums = $albums->take(20);
+            }
+            $albums = $albums->get();
 
         }else {
             
@@ -103,15 +106,8 @@ class AlbumsController extends Controller
 		$limit= 9;
 		$start = $request->start;
 		
-		if (Auth::check()) {
- 
-            $session_tbl = new SessionImage;
+        $session_tbl = new SessionImage;
 
-        }else{
- 
-           $session_tbl = SessionImage::take(9); 
-        }
- 
 		if(!empty($request->slug)) {
 
             $category = AlbumCategory::where('slug', $request->slug)->first();
@@ -120,9 +116,7 @@ class AlbumsController extends Controller
 
         }else {
             
-            // Default to People category when no slug
-            $people = AlbumCategory::where('slug', 'people')->first();
-            $albums = $people ? $session_tbl->where('album_category_id', $people->id) : $session_tbl;
+            $albums = $session_tbl;
 
         }
 		if (Auth::check()) {
@@ -136,7 +130,7 @@ class AlbumsController extends Controller
 			$auth =true;
 		}else{
 
-           $albums = $albums->orderBy('created_at','DESC')->get();
+           $albums = $albums->orderBy('created_at', 'DESC')->take(20)->get();
 		   $auth =false;
         }
 		 
