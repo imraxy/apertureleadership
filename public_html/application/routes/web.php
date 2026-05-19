@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 //Cart routes
 Route::get('cart/add_item', 'CartController@store')->name('cart.addItem');
-Route::post('/get_album_images', 'CartController@get_album_images')->name('user.get_album_images');
+Route::post('/get_album_images', 'CartController@get_album_images')->name('user.get_album_images')->middleware(['auth', 'group.session']);
 
 //front-end routes
 Route::group(['namespace' => 'Front'], function () {
@@ -224,13 +224,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admi
 
 Auth::routes();
 
-Route::get('/home', 'CartController@index')->name('home');
-Route::get('/account/folders/{folder_id?}', 'CartController@index')->name('account.folders')->middleware('auth');
-Route::get('/account/folders/{user_id}/remove/{cart_id}', 'CartController@destroy')->name('account.folders.remove')->middleware('auth');
+Route::get('/home', 'CartController@index')->name('home')->middleware(['auth', 'group.session']);
+Route::get('/account/folders/{folder_id?}', 'CartController@index')->name('account.folders')->middleware(['auth', 'group.session']);
+Route::get('/account/folders/{user_id}/remove/{cart_id}', 'CartController@destroy')->name('account.folders.remove')->middleware(['auth', 'group.session']);
 
-Route::get('/account/folders/{folder_id}/chat', 'Chats\ChatsController@show')->name('account.folders.chat')->middleware('auth');
+Route::get('/account/folders/{folder_id}/chat', 'Chats\ChatsController@show')->name('account.folders.chat')->middleware(['auth', 'group.session']);
 
-Route::group(['namespace' => 'Chats', 'prefix' => 'chat-conversation'], function() {
+Route::group(['namespace' => 'Chats', 'prefix' => 'chat-conversation', 'middleware' => ['auth', 'group.session']], function() {
 	Route::post('/chat_action', 'ChatsController@store')->name('user.chat_action');
 	Route::post('/chat_conversation_list', 'ChatsController@chatmessageList')->name('user.chatmessageList');
 	Route::get('/chat_conversation_list', 'ChatsController@chatmessageList')->name('user.chatmessageList');

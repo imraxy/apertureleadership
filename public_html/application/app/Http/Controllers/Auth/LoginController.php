@@ -35,22 +35,16 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-
-        if(!empty(session()->get('url.intended'))) {
-                        
-            return redirect(session()->get('url.intended'));
-            
+        if (!empty(session()->get('url.intended'))) {
+            return session()->get('url.intended');
         }
 
-        // Check if user has approval_code (group user) or not (solo user)
         $user = Auth::user();
-        if($user && !empty($user->approval_code)) {
-            // Group user - go to folders/chat
-            return redirect(route('account.folders'));
-        } else {
-            // Solo user - go straight to albums/gallery
-            return redirect(route('front.albums'));
+        if ($user && !empty($user->approval_code)) {
+            return route('account.folders');
         }
+
+        return route('front.albums');
     }
     
     /**
@@ -108,29 +102,8 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            $user = Auth::user();
-            
-            // Clear stale session data on login
             session()->forget(['selected_photos', 'cart', 'folder_selections']);
-            
-// 			...
-            
-            return $this->sendLoginResponse($request);
-        }
 
-        // If the login attempt was unsuccessful we will increment the number of attempts
-// 					}
-// 				}else{
-// 						Auth::logout();
-// 						session(['login_error' => 'Your access code is wrong!!']);
-// 						return redirect('/login')->with('danger','Your access code is wrong!!');
-// 				}
-// 			}else{
-// 					Auth::logout();
-// 					session(['login_error' => 'Your access code is invalid!!']);
-// 					return redirect('/login')->with('danger','Your access code is invalid!!');
-// 			}
-			
             return $this->sendLoginResponse($request);
         }
 
