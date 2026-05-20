@@ -15,7 +15,7 @@
 		}
 	});
 
-	function perform_add_to_cart(cart_id, userid) {
+	window.perform_add_to_cart = function perform_add_to_cart(cart_id, userid) {
 		
 		var api_url = $("#root").attr('data-root');
 		
@@ -48,14 +48,17 @@
         });
 	}
 
-	$(document).on('click', '.addtocartbtn', function () {  
+	$(document).on('click', '.addtocartbtn', function (e) {
+		e.preventDefault();
+		e.stopPropagation();
 
 		var $this = $(this);
-		
 		var cart_id = $this.data('val');
-		
-		var userid = $(".userid").val();
-		
+		var userid = $('.userid').val();
+
+		if (!cart_id) {
+			return;
+		}
+
 		perform_add_to_cart(cart_id, userid);
-		
 	});
