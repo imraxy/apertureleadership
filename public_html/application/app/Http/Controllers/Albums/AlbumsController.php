@@ -16,30 +16,21 @@ class AlbumsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($slug=NULL)
-    {   
+    public function index($slug = null)
+    {
+        if (empty($slug)) {
+            return redirect()->route('front.albums', ['slug' => 'people']);
+        }
+
         $session_tbl = new SessionImage;
 
-        if(!empty($slug)) {
+        $category = AlbumCategory::where('slug', $slug)->first();
 
-            $category = AlbumCategory::where('slug', $slug)->first();
-
-            if(!$category) {
-
-                return abort(404);
-            }
-
-            $albums = $session_tbl->where('album_category_id', $category->id);
-
-        }else {
-
-            // Default to "people" category when no slug provided
-            $people = AlbumCategory::where('slug', 'people')->first();
-            $albums = $people 
-                ? $session_tbl->where('album_category_id', $people->id)
-                : $session_tbl;
-
+        if (!$category) {
+            return abort(404);
         }
+
+        $albums = $session_tbl->where('album_category_id', $category->id);
 
         $albums = $albums->with('albumCategory')->orderBy('created_at', 'DESC');
 
