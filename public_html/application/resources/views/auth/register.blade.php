@@ -80,33 +80,6 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
                               </div>
 
-                              <div class="form-group">
-                                <label>How will you use Aperture?</label>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="session_solo" name="session_type" value="solo" class="custom-control-input" {{ old('session_type', 'solo') === 'solo' ? 'checked' : '' }}>
-                                    <label class="custom-control-label" for="session_solo">Solo — browse the photo libraries</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="session_group_create" name="session_type" value="group_create" class="custom-control-input" {{ old('session_type') === 'group_create' ? 'checked' : '' }}>
-                                    <label class="custom-control-label" for="session_group_create">Group — start a new session (you receive an access code)</label>
-                                </div>
-                                <div class="custom-control custom-radio mb-2">
-                                    <input type="radio" id="session_group_join" name="session_type" value="group_join" class="custom-control-input" {{ old('session_type') === 'group_join' ? 'checked' : '' }}>
-                                    <label class="custom-control-label" for="session_group_join">Group — join with an access code</label>
-                                </div>
-                                @error('session_type')
-                                    <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                              </div>
-
-                              <div class="form-group" id="group-code-wrap" style="display: {{ old('session_type') === 'group_join' ? 'block' : 'none' }};">
-                                <label for="group_code">Group access code</label>
-                                <input id="group_code" type="text" class="form-control @error('group_code') is-invalid @enderror" name="group_code" value="{{ old('group_code') }}" maxlength="6" placeholder="6-character code" autocomplete="off" style="text-transform: uppercase;">
-                                @error('group_code')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                              </div>
-
                               @php
                                   $num1 = rand(1, 10);
                                   $num2 = rand(1, 10);
@@ -142,20 +115,3 @@
     </section>
 @endsection
 
-@push('js')
-	<script type="text/javascript">
-		(function () {
-			var radios = document.querySelectorAll('input[name="session_type"]');
-			var codeWrap = document.getElementById('group-code-wrap');
-			function toggleGroupCode() {
-				var join = document.getElementById('session_group_join');
-				if (codeWrap && join) {
-					codeWrap.style.display = join.checked ? 'block' : 'none';
-				}
-			}
-			radios.forEach(function (r) { r.addEventListener('change', toggleGroupCode); });
-			toggleGroupCode();
-		})();
-	</script>
-@endpush
-	

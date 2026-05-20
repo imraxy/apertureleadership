@@ -27,15 +27,7 @@ class RedirectIfAuthenticated
 
             }
 
-            // Check if user has approval_code (group user) or not (solo user)
-            $user = Auth::user();
-            if ($user && trim((string) $user->approval_code) !== '') {
-                // Group user - go to folders/chat
-                return redirect(route('account.folders'));
-            } else {
-                // Solo user - go straight to albums/gallery
-                return redirect(route('front.albums'));
-            }
+            return redirect(route('front.albums'));
         }
 
         return $next($request);

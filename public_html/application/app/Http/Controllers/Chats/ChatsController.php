@@ -5,89 +5,106 @@ namespace App\Http\Controllers\Chats;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
-use Carbon\Carbon;
-use App\User;
-use App\Models\ChatMessage;
 use App\Models\Chat;
 use App\Models\Cart;
-use App\Models\SessionImage;
-use Helper;
-use Exception;
+use App\Services\CollaborationService;
 
 class ChatsController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected $collaboration;
+
+    public function __construct(CollaborationService $collaboration)
     {
         $this->middleware('auth');
+        $this->collaboration = $collaboration;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $chat = new Chat;
+        if ($request->action !== 'insert_chat') {
+            return response()->json(['error' => 'Invalid action'], 400);
+        }
 
-        if($request->action == 'insert_chat') {  
-			$access_code = Auth::user()->approval_code;		
-            $chat->insertChat($access_code, $request->chat_message);
-        }   
+        $user = Auth::user();
+        $message = trim((string) $request->chat_message);
+
+        if ($message === '') {
+            return response()->json(['conversation' => '', 'error' => 'Message cannot be empty.'], 422);
+        }
+
+        $chatKeys = $this->collaboration->getActiveChatKeysForUser($user);
+
+        if (empty($chatKeys)) {
+            return response()->json([
+                'conversation' => '',
+                'error' => 'Invite a collaborator and wait for them to accept before chatting.',
+            ], 422);
+        }
+
+        foreach ($chatKeys as $chatKey) {
+            Chat::create([
+                'user_type' => 'user',
+                'sender_user_id' => $user->id,
+                'msg' => $message,
+                'access_code' => $chatKey,
+            ]);
+        }
+
+        $chat = new Chat();
+        $conversation = $chat->getadminUserChatsCodeMerged($chatKeys);
+
+        return response()->json(['conversation' => $conversation]);
     }
 
     public function chatmessageList(Request $request)
-    {   
-        $chat = new Chat;
-        
-        if($request->action == 'update_user_chat') {
-			$access_code = Auth::user()->approval_code;
-            $conversation = $chat->getadminUserChatsCode($access_code);
-
-            $data = array(
-                "conversation" => $conversation         
-            );
-            
-            echo json_encode($data);
+    {
+        if ($request->action !== 'update_user_chat') {
+            return response()->json(['conversation' => '']);
         }
+
+        $user = Auth::user();
+        $chatKeys = $this->collaboration->getActiveChatKeysForUser($user);
+
+        if (empty($chatKeys)) {
+            return response()->json(['conversation' => '']);
+        }
+
+        $chat = new Chat();
+        $conversation = $chat->getadminUserChatsCodeMerged($chatKeys);
+
+        return response()->json(['conversation' => $conversation]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $folder_id
-     * @return \Illuminate\Http\Response
-     */
     public function show($folder_id)
     {
         $folder_id = base64_decode($folder_id);
-
-        $folder_id = trim($folder_id, "&".auth::user()->user_name);
+        $folder_id = trim($folder_id, '&' . Auth::user()->user_name);
 
         $folder_detail = Cart::where(['id' => $folder_id, 'user_id' => Auth::id()])->first();
 
-        if(!$folder_detail) {
+        if (!$folder_detail) {
             return abort(404);
         }
 
-        $folders = Cart::where('user_id', Auth::id())->get();
+        $user = Auth::user();
+        $folders = Cart::where('user_id', $user->id)->get();
+        $chatKeys = $this->collaboration->getActiveChatKeysForUser($user);
+        $memberIds = $this->collaboration->memberUserIds($user);
+        $panel = $this->collaboration->getPanelData($user);
 
-        $from_user_id = 1;
-        
-        $to_user_id = Auth::id();
+        $chats = !empty($chatKeys)
+            ? Chat::whereIn('access_code', $chatKeys)->orderBy('created_at', 'ASC')->get()
+            : collect();
 
-        $chats = DB::select("SELECT * FROM `chat_messages` WHERE (sender_user_id = '".$from_user_id."' AND reciever_user_id = '".$to_user_id."' AND `cart_id` = '".$folder_detail->id."') OR (sender_user_id = '".$to_user_id."' AND reciever_user_id = '".$from_user_id."' AND `cart_id` = '".$folder_detail->id."') ORDER BY created_at ASC");
-        
-        return view('folder_list', compact('folders', 'chats', 'folder_detail'));
+        $chatEnabled = !empty($chatKeys);
+
+        return view('folder_list', array_merge(compact(
+            'folders',
+            'chats',
+            'folder_detail',
+            'chatEnabled',
+            'chatKeys',
+            'memberIds'
+        ), $panel));
     }
-
 }

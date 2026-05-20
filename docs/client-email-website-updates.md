@@ -13,9 +13,10 @@
 | Guest preview 20 per category | [#6](https://github.com/imraxy/apertureleadership/issues/6) ✅ |
 | Solo login → gallery | [#12](https://github.com/imraxy/apertureleadership/issues/12) ✅ |
 | Group isolation & codes | [#13](https://github.com/imraxy/apertureleadership/issues/13) ✅ |
-| Signup (solo vs group) | [#14](https://github.com/imraxy/apertureleadership/issues/14) ✅ |
+| Signup (solo vs group) | [#14](https://github.com/imraxy/apertureleadership/issues/14) ✅ superseded — group removed from signup |
 | Remove All tab; default to People | staging (`5cafc1b`) ✅ |
 | Auth pages light theme | staging (`0498ccb`) ✅ |
+| Folder collaboration (invites, multi-session, chat) | `release/stg` (May 2026) — see `docs/folder-collaboration-plan.md` |
 | Deploy to production | [#15](https://github.com/imraxy/apertureleadership/issues/15) |
 | Send final cost | [#16](https://github.com/imraxy/apertureleadership/issues/16) |
 

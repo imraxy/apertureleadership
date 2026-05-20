@@ -35,35 +35,14 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-        $user = Auth::user();
-
-        if ($this->userHasGroupSession($user)) {
-            return route('account.folders');
-        }
-
         return route('front.albums');
     }
 
-    /**
-     * Post-login redirect. Must override intended URL for solo users (Laravel
-     * otherwise sends them to url.intended, often /account/folders).
-     */
     protected function authenticated(Request $request, $user)
     {
-        session()->forget(['selected_photos', 'cart', 'folder_selections']);
-
-        if ($this->userHasGroupSession($user)) {
-            return redirect()->intended(route('account.folders'));
-        }
-
-        session()->forget('url.intended');
+        session()->forget(['selected_photos', 'cart', 'folder_selections', 'url.intended']);
 
         return redirect()->route('front.albums');
-    }
-
-    private function userHasGroupSession($user)
-    {
-        return $user && trim((string) $user->approval_code) !== '';
     }
     
     /**
@@ -88,17 +67,7 @@ class LoginController extends Controller
         $urlPrevious = url()->previous();
         $urlBase = url()->to('/');
 
-        // Only remember intended URL for group-session pages (solo users go to albums)
-        $folderPaths = ['/account/folders', '/home'];
-        $isFolderPath = false;
-        foreach ($folderPaths as $path) {
-            if (strpos($urlPrevious, $path) !== false) {
-                $isFolderPath = true;
-                break;
-            }
-        }
-        if (!$isFolderPath
-            && $urlPrevious != $urlBase . '/login'
+        if ($urlPrevious != $urlBase . '/login'
             && strpos($urlPrevious, $urlBase) === 0) {
             session()->put('url.intended', $urlPrevious);
         }

@@ -31,13 +31,11 @@ GitHub milestone: https://github.com/imraxy/apertureleadership/milestone/1
 Feature branches (`fix/andy-6-*`, `fix/andy-12-*`, `fix/andy-13-14-*`) are merged into `release/stg`. Open: #15 production deploy, #16 invoice.
 
 ### High Priority
-1. **Solo user flow** - Direct to gallery instead of folders page
-2. **Group session isolation** - Separate contexts, no cross-visibility
-3. **Automatic group codes** - Self-managed, no admin approval
+1. **Folder collaboration** — Implemented and deployed to staging (2026-05-19): invite/search/accept/decline/remove/leave on My folder; shared folders + session chat. See `docs/folder-collaboration-plan.md`.
+2. **Production deploy** (#15) after client sign-off on staging collaboration flow.
 
 ### Medium Priority
-4. **Increase preview images** - 10 → 20 per category before login
-5. **Deploy to production** - After staging verification
+3. **Deploy to production** — After staging verification (#15, #16 invoice)
 
 ## Technical Notes
 
@@ -47,9 +45,7 @@ Feature branches (`fix/andy-6-*`, `fix/andy-12-*`, `fix/andy-13-14-*`) are merge
 
 ## Next steps
 
-1. Implement solo user flow (bypass folders, go to gallery)
-2. Implement group isolation (automatic unique codes)
-3. Increase preview image limit
-4. Test on staging
-5. Deploy to production
-6. Send final cost to client
+1. Deploy phase 0 (no registration groups) to staging; verify register/login/folder nav
+2. Implement `collaboration_sessions` + invite UI per plan doc
+3. Migrate legacy `approval_code` users into sessions
+4. Production deploy + client invoice
