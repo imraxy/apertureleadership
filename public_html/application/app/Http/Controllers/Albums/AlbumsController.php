@@ -112,11 +112,11 @@ class AlbumsController extends Controller
         }
 		if (Auth::check()) {
 
-            $albums = $this->sortAlbumsForDisplay(
-                $albums
-                    ->orderBy('created_at', 'DESC')
-                    ->get()
-            )->slice($start, $limit)->values();
+            $albums = $albums
+					->limit($limit)
+                    ->offset($start)
+                    ->orderBy('created_at','DESC')
+					->get();
 		 
 			$auth =true;
 		}else{
@@ -128,13 +128,10 @@ class AlbumsController extends Controller
         }
 		 
 					
-		return ['albums'=>$albums,'status'=>true,'auth'=>$auth'];			
+		return ['albums'=>$albums,'status'=>true,'auth'=>$auth];
 		
 	}
 
-    /**
-     * Wide/landscape images first, then portraits — newest first within each group.
-     */
     private function sortAlbumsForDisplay($albums)
     {
         return $albums->sort(function ($a, $b) {
@@ -155,7 +152,7 @@ class AlbumsController extends Controller
             return (float) $image->width >= (float) $image->height;
         }
 
-        return isset($image->shape) && $image->shape === 'rectangle';
+        return !empty($image->shape) && $image->shape === 'rectangle';
     }
 	
 	public function setImageShape(){
