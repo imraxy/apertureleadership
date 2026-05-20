@@ -38,7 +38,7 @@ class AlbumsController extends Controller
             $albums = $albums->take(20);
         }
 
-        $albums = $albums->get();
+        $albums = $this->sortAlbumsForDisplay($albums->get());
 
         $albumcategories = AlbumCategory::get();
        
@@ -64,11 +64,11 @@ class AlbumsController extends Controller
             if (!Auth::check()) {
                 $albums = $albums->take(20);
             }
-            $albums = $albums->get();
+            $albums = $this->sortAlbumsForDisplay($albums->get());
 
         }else {
             
-            $albums = SessionImage::latest()->take(20)->get();
+            $albums = $this->sortAlbumsForDisplay(SessionImage::latest()->take(20)->get());
 
         }
 
@@ -112,23 +112,51 @@ class AlbumsController extends Controller
         }
 		if (Auth::check()) {
 
-            $albums = $albums
-					->limit($limit)
-                    ->offset($start)
-                    ->orderBy('created_at','DESC')
-					->get();
+            $albums = $this->sortAlbumsForDisplay(
+                $albums
+                    ->orderBy('created_at', 'DESC')
+                    ->get()
+            )->slice($start, $limit)->values();
 		 
 			$auth =true;
 		}else{
 
-           $albums = $albums->orderBy('created_at', 'DESC')->take(20)->get();
+           $albums = $this->sortAlbumsForDisplay(
+               $albums->orderBy('created_at', 'DESC')->take(20)->get()
+           );
 		   $auth =false;
         }
 		 
 					
-		return ['albums'=>$albums,'status'=>true,'auth'=>$auth];			
+		return ['albums'=>$albums,'status'=>true,'auth'=>$auth'];			
 		
 	}
+
+    /**
+     * Wide/landscape images first, then portraits — newest first within each group.
+     */
+    private function sortAlbumsForDisplay($albums)
+    {
+        return $albums->sort(function ($a, $b) {
+            $aLandscape = $this->isLandscapeImage($a);
+            $bLandscape = $this->isLandscapeImage($b);
+
+            if ($aLandscape !== $bLandscape) {
+                return $aLandscape ? -1 : 1;
+            }
+
+            return strtotime($b->created_at) - strtotime($a->created_at);
+        })->values();
+    }
+
+    private function isLandscapeImage($image)
+    {
+        if (!empty($image->width) && !empty($image->height)) {
+            return (float) $image->width >= (float) $image->height;
+        }
+
+        return isset($image->shape) && $image->shape === 'rectangle';
+    }
 	
 	public function setImageShape(){
 		
