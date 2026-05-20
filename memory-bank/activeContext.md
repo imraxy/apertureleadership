@@ -26,7 +26,9 @@
 
 See full details in `docs/client-email-website-updates.md`  
 GitHub milestone: https://github.com/imraxy/apertureleadership/milestone/1  
-Branch `fix/andy-13-14-group-signup` = full staging integration (#6, #12–#14, auth light theme, albums People default). Open: #15 deploy, #16 invoice.
+
+**Staging release branch:** `release/stg` — merge all stg work here first; merge to `main` only after sign-off.  
+Feature branches (`fix/andy-6-*`, `fix/andy-12-*`, `fix/andy-13-14-*`) are merged into `release/stg`. Open: #15 production deploy, #16 invoice.
 
 ### High Priority
 1. **Solo user flow** - Direct to gallery instead of folders page

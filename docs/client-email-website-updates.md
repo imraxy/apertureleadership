@@ -3,7 +3,8 @@
 **Date:** April 12-22, 2026
 **Client:** Andy Craggs <andy_craggs@hotmail.com>
 
-**GitHub milestone:** [Client: Andy — Website Updates (Apr 2026)](https://github.com/imraxy/apertureleadership/milestone/1)
+**GitHub milestone:** [Client: Andy — Website Updates (Apr 2026)](https://github.com/imraxy/apertureleadership/milestone/1)  
+**Staging release branch:** [`release/stg`](https://github.com/imraxy/apertureleadership/tree/release/stg) — finish and verify here before merging to `main`.
 
 | Task | GitHub |
 |------|--------|
