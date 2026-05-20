@@ -3,6 +3,21 @@
 **Date:** April 12-22, 2026
 **Client:** Andy Craggs <andy_craggs@hotmail.com>
 
+**GitHub milestone:** [Client: Andy — Website Updates (Apr 2026)](https://github.com/imraxy/apertureleadership/milestone/1)
+
+| Task | GitHub |
+|------|--------|
+| Upload 54–55 new photos | [#9](https://github.com/imraxy/apertureleadership/issues/9) ✅ |
+| Category restructure | [#10](https://github.com/imraxy/apertureleadership/issues/10) ✅ |
+| Guest preview 20 per category | [#6](https://github.com/imraxy/apertureleadership/issues/6) ✅ |
+| Solo login → gallery | [#12](https://github.com/imraxy/apertureleadership/issues/12) ✅ |
+| Group isolation & codes | [#13](https://github.com/imraxy/apertureleadership/issues/13) ✅ |
+| Signup (solo vs group) | [#14](https://github.com/imraxy/apertureleadership/issues/14) ✅ |
+| Remove All tab; default to People | staging (`5cafc1b`) ✅ |
+| Auth pages light theme | staging (`0498ccb`) ✅ |
+| Deploy to production | [#15](https://github.com/imraxy/apertureleadership/issues/15) |
+| Send final cost | [#16](https://github.com/imraxy/apertureleadership/issues/16) |
+
 ---
 
 ## Summary of Client Requests

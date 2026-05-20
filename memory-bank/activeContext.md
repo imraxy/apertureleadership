@@ -24,7 +24,9 @@
 
 ## Queued work (from client email Apr 12-22, 2026)
 
-See full details in `docs/client-email-website-updates.md`
+See full details in `docs/client-email-website-updates.md`  
+GitHub milestone: https://github.com/imraxy/apertureleadership/milestone/1  
+Branch `fix/andy-13-14-group-signup` = full staging integration (#6, #12–#14, auth light theme, albums People default). Open: #15 deploy, #16 invoice.
 
 ### High Priority
 1. **Solo user flow** - Direct to gallery instead of folders page
