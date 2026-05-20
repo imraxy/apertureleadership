@@ -29,7 +29,7 @@ class RedirectIfAuthenticated
 
             // Check if user has approval_code (group user) or not (solo user)
             $user = Auth::user();
-            if($user && !empty($user->approval_code)) {
+            if ($user && trim((string) $user->approval_code) !== '') {
                 // Group user - go to folders/chat
                 return redirect(route('account.folders'));
             } else {

@@ -14,7 +14,7 @@ class EnsureGroupSession
     {
         $user = Auth::user();
 
-        if ($user && empty($user->approval_code)) {
+        if ($user && trim((string) $user->approval_code) === '') {
             return redirect()->route('front.albums');
         }
 

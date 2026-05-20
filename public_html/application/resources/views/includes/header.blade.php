@@ -37,7 +37,7 @@
 										</li>
 										
 										@else
-											@if(!empty(Auth::user()->approval_code))
+											@if(trim((string) Auth::user()->approval_code) !== '')
 											<li class="nav-item">
 												<a class="nav-link {{ Route::currentRouteName() == 'account.folders' ? 'active' : '' }}" href="{{ route('account.folders') }}">My folder</a>
 											</li>
